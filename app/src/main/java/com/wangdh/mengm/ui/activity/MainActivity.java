@@ -1,0 +1,187 @@
+package com.wangdh.mengm.ui.activity;
+
+import android.Manifest;
+import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.wangdh.mengm.R;
+import com.wangdh.mengm.base.BaseActivity;
+import com.wangdh.mengm.base.TabEntity;
+import com.wangdh.mengm.component.AppComponent;
+import com.yanzhenjie.alertdialog.AlertDialog;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.RationaleListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import butterknife.BindView;
+
+public class MainActivity extends BaseActivity {
+    private static final int REQUEST_CODE_PERMISSION = 100;
+    private static final int REQUEST_CODE_SETTING = 300;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
+    @BindView(R.id.main_tabtv)
+    TextView mainTabtv;
+    @BindView(R.id.main_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.commontab)
+    CommonTabLayout mainTab;
+    private ArrayList<Fragment> mFragments ;
+    private int[] mIconUnselectIds = {
+            R.mipmap.icon_news_un, R.mipmap.icon_wechat_un,
+            R.mipmap.icon_find_un, R.mipmap.icon_my_un};
+    private int[] mIconSelectIds = {
+            R.mipmap.icon_news, R.mipmap.icon_wechat,
+            R.mipmap.icon_find, R.mipmap.icon_my};
+    private String[] mTitles = {"新闻头条", "微信精选", "生活健康", "我的"};
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
+    }
+
+    @Override
+    protected int setLayoutResourceID() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
+        mainTabtv.setText("MyApp");
+        setSupportActionBar(toolbar);
+        NavigationItemSelectedListener();
+        initTab();
+    }
+
+    private void initTab() {
+        mFragments=new ArrayList<>();
+
+        for (int i = 0; i < mTitles.length; i++) {
+            mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
+        }
+        mainTab.setTabData(mTabEntities, this, R.id.framelayout, mFragments);
+        mainTab.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                mainTab.setCurrentTab(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+        mainTab.setCurrentTab(0);
+    }
+
+    private void NavigationItemSelectedListener() {
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);//抽屉开关的效果
+        mDrawerToggle.syncState();//初始化状态
+        drawer.addDrawerListener(mDrawerToggle);
+        navView.setNavigationItemSelectedListener((item) -> {
+            switch (item.getItemId()) {
+                case R.id.weatheritem:
+
+                    break;
+                case R.id.pictureitem:
+
+                    break;
+                case R.id.videoiitem:
+
+                    break;
+            }
+            item.setChecked(true);//点击了把它设为选中状态
+            drawer.closeDrawers();//关闭抽屉
+            return true;
+        });
+    }
+
+    @Override
+    protected void initData() {
+        initPermission();
+    }
+
+    private void initPermission() {
+        // 申请权限。
+        AndPermission.with(this)
+                .requestCode(REQUEST_CODE_PERMISSION)
+                .permission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)
+                .callback(permissionListener)
+                .rationale(rationaleListener)
+                .start();
+    }
+
+
+    /**
+     * 回调监听。
+     */
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onSucceed(int requestCode, List<String> grantPermissions) {
+            switch (requestCode) {
+                case REQUEST_CODE_PERMISSION: {
+                    // Toast.makeText(LoginActivity.this, "获取权限成功", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public void onFailed(int requestCode, List<String> deniedPermissions) {
+            switch (requestCode) {
+                case REQUEST_CODE_PERMISSION: {
+                    Toast.makeText(MainActivity.this, "获取权限失败", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            if (AndPermission.hasAlwaysDeniedPermission(MainActivity.this, deniedPermissions)) {
+                // 第一种：用默认的提示语。
+                AndPermission.defaultSettingDialog(MainActivity.this, REQUEST_CODE_SETTING).show();
+            }
+        }
+    };
+
+    /**
+     * Rationale支持，这里自定义对话框。
+     */
+    private RationaleListener rationaleListener = (requestCode, rationale) -> {
+
+        AlertDialog.newBuilder(this)
+                .setTitle("友好提醒")
+                .setMessage("你已经拒绝了权限")
+                .setPositiveButton("好，给你", (dialog, which) -> {
+                    dialog.cancel();
+                    rationale.resume();
+                })
+                .setNegativeButton("我拒绝", (dialog, which) -> {
+                    dialog.cancel();
+                    rationale.cancel();
+                }).show();
+    };
+
+    @Override   //用户在系统Setting中操作完成后
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SETTING: {
+                //    Toast.makeText(LoginActivity.this, "系统设置中操作完成后", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+    }
+
+}
