@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,11 +18,14 @@ import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.base.TabEntity;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.ui.fragment.LiveFragment;
+import com.wangdh.mengm.ui.fragment.MyFragment;
+import com.wangdh.mengm.ui.fragment.NewFragment;
+import com.wangdh.mengm.ui.fragment.WeChatFragment;
 import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.RationaleListener;
-
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -69,7 +73,10 @@ public class MainActivity extends BaseActivity {
 
     private void initTab() {
         mFragments=new ArrayList<>();
-
+        mFragments.add(new NewFragment());
+        mFragments.add(new WeChatFragment());
+        mFragments.add(new LiveFragment());
+        mFragments.add(new MyFragment());
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
@@ -78,6 +85,11 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabSelect(int position) {
                 mainTab.setCurrentTab(position);
+                if(position>0){
+                    toolbar.setVisibility(View.GONE);
+                }else {
+                    toolbar.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
