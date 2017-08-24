@@ -5,5 +5,5 @@ package com.wangdh.mengm.base;
  */
 
 public class Constant {
-    public static final String BaseUrl="http://api.zhuishushenqi.com";
+    public static final String BaseUrl="http://api.avatardata.cn/";
 }

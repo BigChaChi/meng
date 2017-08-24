@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.bean.CelebratedDictum;
@@ -14,9 +13,7 @@ import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerActivityComponent;
 import com.wangdh.mengm.ui.Presenter.SplashPresenter;
 import com.wangdh.mengm.ui.contract.SplashContract;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -99,7 +96,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     @Override
     public void showSplashData(CelebratedDictum dictum) {
         textView.setText(dictum.getResult().getFamous_saying());
-        name.setText(dictum.getResult().getFamous_name());
+        name.setText("─ "+dictum.getResult().getFamous_name());
     }
 
     @Override

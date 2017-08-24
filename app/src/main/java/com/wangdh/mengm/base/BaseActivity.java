@@ -14,10 +14,12 @@ import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
+    private Unbinder unbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         init(savedInstanceState);//用于初始化view之前做一些事情
         StateBarTranslucentUtils.setStateBarTranslucent(this);
         setContentView(setLayoutResourceID());
-        ButterKnife.bind(this);
+        unbinder=ButterKnife.bind(this);
         mContext = this;
         transparent19and20();
         setupActivityComponent(MyApplication.getsInstance().getAppComponent());
@@ -61,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        unbinder.unbind();
         finish();
     }
 

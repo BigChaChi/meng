@@ -10,20 +10,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import com.wangdh.mengm.MyApplication;
 import com.wangdh.mengm.component.AppComponent;
+
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
     private View mContentView;
     protected FragmentActivity activity;
     protected Context mContext;
+    private Unbinder unbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContentView = inflater.inflate(setLayoutResourceID(), container, false);
-        ButterKnife.bind(this, mContentView);
+        unbinder = ButterKnife.bind(this, mContentView);
         activity = getSupportActivity();
         mContext = activity;
         setupActivityComponent(MyApplication.getsInstance().getAppComponent());
@@ -32,7 +36,9 @@ public abstract class BaseFragment extends Fragment {
         initData();
         return mContentView;
     }
+
     protected abstract void setupActivityComponent(AppComponent appComponent);
+
     protected abstract int setLayoutResourceID();
 
     protected abstract void initData();
@@ -65,6 +71,12 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (FragmentActivity) activity;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

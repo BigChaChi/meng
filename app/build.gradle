@@ -57,8 +57,14 @@ dependencies {
     //权限
     compile 'com.yanzhenjie:permission:1.1.0'
     //图片
-    compile 'com.github.bumptech.glide:glide:4.0.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     //tab
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    //adapter
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
+    //webview
+    compile 'com.just.agentweb:agentweb:1.2.6'
 }
