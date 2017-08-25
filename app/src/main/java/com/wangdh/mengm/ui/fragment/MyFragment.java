@@ -47,7 +47,6 @@ public class MyFragment extends BaseFragment {
 
     private void intToolbar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
        // toolbar.setNavigationIcon(R.drawable.ximalogo);
         toolbar.setTitle("喜马拉雅");
     }

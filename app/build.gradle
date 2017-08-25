@@ -53,7 +53,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //log
-    compile 'com.orhanobut:logger:2.1.1'
+    compile 'com.orhanobut:logger:1.15'
     //权限
     compile 'com.yanzhenjie:permission:1.1.0'
     //图片

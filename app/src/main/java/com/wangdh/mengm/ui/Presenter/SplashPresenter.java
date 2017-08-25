@@ -24,12 +24,14 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
                 .subscribe(new DefaultSubscriber<CelebratedDictum>() {
                     @Override
                     public void onNext(CelebratedDictum dictum) {
-                        mView.showSplashData(dictum);
+                        if(dictum!=null){
+                            mView.showSplashData(dictum);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
+                        mView.showError(t.getMessage()+"");
                     }
 
                     @Override

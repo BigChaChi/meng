@@ -3,9 +3,10 @@ package com.wangdh.mengm.api;
 import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.NewListData;
+import com.wangdh.mengm.bean.WeChatListData;
 
 import java.util.List;
-
+import java.util.Map;
 import io.reactivex.Flowable;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -42,7 +43,11 @@ public class RetrofitManager {
         return service.splashRxjava();
     }
 
-    public Flowable<List<NewListData>> newListDataFlowable(String channel, int start) {
-        return service.newListDataRxjava(channel, start);
+    public Flowable<NewListData> newListDataFlowable(Map<String,String> params) {
+        return service.newListDataRxjava(params);
+    }
+
+    public Flowable<WeChatListData> weChatListDataFlowable(Map<String,String> params){
+        return service.weCharListDataRxjava(params);
     }
 }

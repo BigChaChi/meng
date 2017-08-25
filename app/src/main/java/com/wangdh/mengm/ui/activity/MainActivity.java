@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.RationaleListener;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -36,8 +39,6 @@ public class MainActivity extends BaseActivity {
     NavigationView navView;
     @BindView(R.id.drawer)
     DrawerLayout drawer;
-    @BindView(R.id.main_tabtv)
-    TextView mainTabtv;
     @BindView(R.id.main_toolbar)
     Toolbar toolbar;
     @BindView(R.id.commontab)
@@ -64,10 +65,14 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mainTabtv.setText("MyApp");
-        setSupportActionBar(toolbar);
+        initToolbar();
         NavigationItemSelectedListener();
         initTab();
+    }
+
+    private void initToolbar() {
+        toolbar.setTitle("MyApp");
+        setSupportActionBar(toolbar);
     }
 
     private void initTab() {
@@ -100,7 +105,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void NavigationItemSelectedListener() {
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close);//抽屉开关的效果
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.open, R.string.close){};//抽屉开关的效果
         mDrawerToggle.syncState();//初始化状态
         drawer.addDrawerListener(mDrawerToggle);
         navView.setNavigationItemSelectedListener((item) -> {
