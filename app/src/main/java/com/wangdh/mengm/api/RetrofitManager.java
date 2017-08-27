@@ -4,6 +4,7 @@ import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.bean.WeChatListData;
+import com.wangdh.mengm.bean.WechatImage;
 
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * wdh
- * Created by Administrator on 2017/8/14.
+ * wdh.
  */
 
 public class RetrofitManager {
@@ -49,5 +49,9 @@ public class RetrofitManager {
 
     public Flowable<WeChatListData> weChatListDataFlowable(Map<String,String> params){
         return service.weCharListDataRxjava(params);
+    }
+
+    public Flowable<WechatImage> wechatImageFlowable(){
+        return service.wecharImageRxjava();
     }
 }

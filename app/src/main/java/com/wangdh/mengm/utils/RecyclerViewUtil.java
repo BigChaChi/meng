@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.wangdh.mengm.widget.DividerItemDecoration;
 
@@ -37,4 +38,9 @@ public class RecyclerViewUtil {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
     }
+    public static void StaggeredGridinit(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter){
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(adapter);
+    }
+
 }

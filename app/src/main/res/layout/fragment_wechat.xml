@@ -2,12 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ImageView
+
+<com.flaviofaria.kenburnsview.KenBurnsView
     android:id="@+id/imag_wechat"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
-
+        <TextView
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/tv_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="100dp"
             android:id="@+id/recycler_wechat"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

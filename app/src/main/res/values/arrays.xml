@@ -2,21 +2,52 @@
 <resources>
     <string-array name="wechat_name">
         <item>推荐</item>
-        <item>视频</item>
-        <item>热点</item>
-        <item>社会</item>
-        <item>娱乐</item>
-        <item>科技</item>
-        <item>汽车</item>
-        <item>体育</item>
-        <item>财经</item>
-        <item>军事</item>
-        <item>国际</item>
-        <item>时尚</item>
-        <item>游戏</item>
-        <item>旅游</item>
-        <item>历史</item>
+        <item>热门</item>
+        <item>体育迷</item>
+        <item>段子手</item>
+        <item>养生堂</item>
+        <item>私房话</item>
+        <item>八卦精</item>
+        <item>爱生活</item>
+        <item>财经迷</item>
+        <item>汽车迷</item>
+        <item>科技咖</item>
+        <item>潮人帮</item>
+        <item>辣妈帮</item>
+        <item>点赞党</item>
+        <item>旅行家</item>
+        <item>职场人</item>
+        <item>美食家</item>
+        <item>古今通</item>
+        <item>学霸族</item>
+        <item>星座控</item>
+        <item>搜索文章</item>
     </string-array>
+
+    <string-array name="wechat_typeid">
+        <item>1</item>
+        <item>0</item>
+        <item>19</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>520</item>
+    </string-array>
+
     <string-array name="wechat_type">
         <item>ic_launcher</item>
         <item>ic_launcher</item>
@@ -26,6 +57,12 @@
         <item>ic_launcher</item>
         <item>"icon_my"</item>
         <item>"icon_my"</item>
+        <item>icon_my</item>
+        <item>icon_my</item>
+        <item>icon_my</item>
+        <item>icon_my</item>
+        <item>icon_my</item>
+        <item>icon_my</item>
         <item>icon_my</item>
         <item>icon_my</item>
         <item>icon_my</item>

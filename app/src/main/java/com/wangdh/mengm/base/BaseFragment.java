@@ -32,8 +32,8 @@ public abstract class BaseFragment extends Fragment {
         mContext = activity;
         setupActivityComponent(MyApplication.getsInstance().getAppComponent());
         init();//在初始化视图之前，做的一些操作
-        initView();
         initData();
+        initView();
         return mContentView;
     }
 

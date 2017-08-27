@@ -3,6 +3,7 @@ package com.wangdh.mengm.api;
 import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.bean.WeChatListData;
+import com.wangdh.mengm.bean.WechatImage;
 
 import java.util.List;
 import java.util.Map;
@@ -27,4 +28,7 @@ public interface ApiService {
 
     @GET("http://route.showapi.com/582-2")
     Flowable<WeChatListData> weCharListDataRxjava(@QueryMap Map<String, String> params);
+
+    @GET("http://route.showapi.com/1287-1?&showapi_appid=44640&showapi_sign=f255043723fe40839e61f6a40a6b0741")
+    Flowable<WechatImage> wecharImageRxjava();
 }

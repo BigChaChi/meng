@@ -17,13 +17,13 @@ public class WeChatItemAdapter  extends BaseItemDraggableAdapter<WeChatData,Base
 
     @Override
     protected void convert(BaseViewHolder helper, WeChatData item) {
-        helper.setText(R.id.tv_wechat_item,item.getName());
+        helper.setText(R.id.tv_wechat_item,item.getName())
+        .addOnClickListener(R.id.wechat_item);
         ImageView view =helper.getView(R.id.iv_wechat_item);
         //通过字符串来获取R下面资源的ID 值
         try {   //此方法图片必须在drawble下面
             int camera = (Integer) R.drawable.class.getField(item.getCode()).get(null);
             view.setImageResource(camera);
-            Log.i("toast",camera+"");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchFieldException e) {

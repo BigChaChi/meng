@@ -31,7 +31,12 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
 
                     @Override
                     public void onError(Throwable t) {
-                        mView.showError(t.getMessage()+"");
+                        if(t!=null){
+                            mView.showError(t.getMessage());
+                        }else {
+                            mView.showError("请检查网络是否链接");
+                        }
+
                     }
 
                     @Override
