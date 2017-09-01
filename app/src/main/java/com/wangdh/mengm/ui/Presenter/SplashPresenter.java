@@ -4,7 +4,9 @@ import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.ui.contract.SplashContract;
+
 import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
@@ -24,19 +26,15 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
                 .subscribe(new DefaultSubscriber<CelebratedDictum>() {
                     @Override
                     public void onNext(CelebratedDictum dictum) {
-                        if(dictum!=null){
+                        if (dictum.getError_code() == 0) {
                             mView.showSplashData(dictum);
+                        } else {
                         }
                     }
 
                     @Override
                     public void onError(Throwable t) {
-                        if(t!=null){
-                            mView.showError(t.getMessage());
-                        }else {
-                            mView.showError("请检查网络是否链接");
-                        }
-
+                        mView.showError(t.getMessage() + "");
                     }
 
                     @Override
@@ -47,7 +45,7 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
     }
 
 
- //                        if (t instanceof HttpException) {
+    //                        if (t instanceof HttpException) {
 //                            HttpException httpException = (HttpException) t;
 //                            //httpException.response().errorBody().string()
 //                            int code = httpException.code();

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tl="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<android.support.design.widget.AppBarLayout
+    android:background="@color/rank_blue"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <com.flyco.tablayout.SegmentTabLayout
+        app:layout_scrollFlags="scroll|enterAlways"
         android:id="@+id/segmenttab"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
@@ -17,9 +21,13 @@
         tl:tl_indicator_corner_radius="8dp"
         tl:tl_tab_padding="20dp"
         tl:tl_textBold="SELECT"/>
+</android.support.design.widget.AppBarLayout>
+
     <android.support.v4.view.ViewPager
+        android:layout_marginTop="2dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

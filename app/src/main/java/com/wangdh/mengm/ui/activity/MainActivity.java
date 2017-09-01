@@ -114,10 +114,10 @@ public class MainActivity extends BaseActivity {
 
                     break;
                 case R.id.pictureitem:
-
+                    startActivity(new Intent(this,MeizhiPictureActivity.class));
                     break;
                 case R.id.videoiitem:
-
+                    startActivity(new Intent(this,VideoListActivity.class));
                     break;
             }
             item.setChecked(true);//点击了把它设为选中状态

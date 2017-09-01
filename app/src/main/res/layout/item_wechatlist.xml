@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="2dp"
-    android:layout_marginBottom="2dp"
-    android:layout_marginRight="2dp">
-<ImageView
-    android:id="@+id/iv_wecharitem"
+    android:id="@+id/wechat_listitem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
-    <TextView
-        android:textColor="@color/read_theme_white"
-        android:id="@+id/tv_wechatitem"
-        android:gravity="center"
-        android:background="@color/wechat"
-        android:lines="1"
-        android:layout_gravity="bottom"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    android:orientation="vertical">
+    <!--图片大小为原始大小，如果图片大小大于ImageView控件，则截取图片中间部分，若小于，则直接将图片居中显示。-->
+    <ImageView
+        android:id="@+id/iv_wecharitem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_wechatitem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/wechat"
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@color/read_theme_white" />
 </FrameLayout>

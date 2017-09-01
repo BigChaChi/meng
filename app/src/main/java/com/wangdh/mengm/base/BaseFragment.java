@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.wangdh.mengm.MyApplication;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.widget.loadding.CustomDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
     protected FragmentActivity activity;
     protected Context mContext;
     private Unbinder unbinder;
-
+    private CustomDialog dialog;//进度条
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,6 +47,32 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initView();
 
     protected void init() {
+    }
+    // dialog
+    public CustomDialog getDialog() {
+        if (dialog == null) {
+            dialog = CustomDialog.instance(getActivity());
+            dialog.setCancelable(true);
+            //点击dialog之外的区域可以取消dialog
+            dialog.setCanceledOnTouchOutside(true);
+        }
+        return dialog;
+    }
+
+    public void hideDialog() {
+        if (dialog != null)
+            dialog.hide();
+    }
+
+    public void showDialog() {
+        getDialog().show();
+    }
+
+    public void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 
     @Override
@@ -77,6 +104,7 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        dismissDialog();
     }
 
     @Override

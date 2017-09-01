@@ -6,7 +6,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.wangdh.mengm"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -68,4 +68,10 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     //webview
     compile 'com.just.agentweb:agentweb:1.2.6'
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //fab
+    compile 'io.github.yavski:fab-speed-dial:1.0.6'
+    //视频
+    compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
 }

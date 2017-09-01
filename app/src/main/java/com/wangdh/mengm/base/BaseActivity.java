@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.wangdh.mengm.MyApplication;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.utils.StateBarTranslucentUtils;
+import com.wangdh.mengm.widget.loadding.CustomDialog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -20,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext;
     private Unbinder unbinder;
+    private CustomDialog dialog;//进度条
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,20 +29,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         init(savedInstanceState);//用于初始化view之前做一些事情
         StateBarTranslucentUtils.setStateBarTranslucent(this);
         setContentView(setLayoutResourceID());
-        unbinder=ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         mContext = this;
-        transparent19and20();
         setupActivityComponent(MyApplication.getsInstance().getAppComponent());
         initData();
         initView();
-    }
-
-    protected void transparent19and20() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
     }
 
     protected void init(Bundle savedInstanceState) {
@@ -54,6 +47,33 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
+    // dialog
+    public CustomDialog getDialog() {
+        if (dialog == null) {
+            dialog = CustomDialog.instance(this);
+            dialog.setCancelable(true);
+            //点击dialog之外的区域可以取消dialog
+            dialog.setCanceledOnTouchOutside(true);
+        }
+        return dialog;
+    }
+
+    public void hideDialog() {
+        if (dialog != null)
+            dialog.hide();
+    }
+
+    public void showDialog() {
+        getDialog().show();
+    }
+
+    public void dismissDialog() {
+        if (dialog != null) {
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -64,6 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        dismissDialog();
         finish();
     }
 

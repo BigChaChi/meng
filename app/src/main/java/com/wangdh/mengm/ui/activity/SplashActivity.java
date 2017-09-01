@@ -86,7 +86,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void showError(String s) {
-        toast(s);
     }
 
     @Override

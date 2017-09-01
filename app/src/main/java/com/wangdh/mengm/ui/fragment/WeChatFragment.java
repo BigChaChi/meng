@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,8 +40,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class WeChatFragment extends BaseFragment implements WeChatFragmentContract.View {
-    @BindView(R.id.tv_bt)
-    TextView mTv;
     @BindView(R.id.imag_wechat)
     KenBurnsView imagWechat;
     @BindView(R.id.recycler_wechat)
@@ -49,7 +50,7 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
     private String wechat_item = "wechat_item";
     @Inject
     WeChatFragmentPresenter mPresenter;
-
+    private View headerView,footerView;
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerFragmentComponent.builder()
@@ -98,8 +99,9 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
         // 开启拖拽
         adapter.enableDragItem(itemTouchHelper);
         adapter.setOnItemDragListener(onItemDragListener);
-        RecyclerViewUtil.Gridinit(getActivity(), recyclerWechat, adapter);
-
+        RecyclerViewUtil.Gridinit(getActivity(), recyclerWechat, adapter,3);
+        adapter.setHeaderView(getHeaderView());
+        adapter.setFooterView(getFooterView());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             Intent intent = new Intent(getActivity(), WeChatListActivity.class);
             intent.putExtra("wechattype", Datas.get(position).getType());
@@ -140,9 +142,9 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
 
     @Override
     public void showImageData(WechatImage data) {
-        mTv.setText(data.getShowapi_res_body().getData().getCopyright());
-        Log.i("toast",data.getShowapi_res_body().getData().getImg_1366());
-        MyGlideImageLoader.displayImage(data.getShowapi_res_body().getData().getImg_1366(), imagWechat);
+        TextView mtv= (TextView) headerView.findViewById(R.id.tv_bt);
+        mtv.setText(data.getImages().get(0).getCopyright());
+        MyGlideImageLoader.displayImage("http://www.bing.com"+data.getImages().get(0).getUrl(), imagWechat);
         imagWechat.setTransitionListener(new KenBurnsView.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
@@ -155,7 +157,14 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
             }
         });
     }
-
+    public View getHeaderView() {
+        headerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview,(ViewGroup)recyclerWechat.getParent(),false);
+        return headerView;
+    }
+    public View getFooterView() {
+        footerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview,(ViewGroup)recyclerWechat.getParent(),false);
+        return footerView;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

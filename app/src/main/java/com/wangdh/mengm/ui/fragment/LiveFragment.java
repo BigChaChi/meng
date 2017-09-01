@@ -9,6 +9,8 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.utils.StateBarTranslucentUtils;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 
@@ -37,15 +39,14 @@ public class LiveFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
     }
 
     @Override
     protected void initView() {
-        mFragments.add(new MyFragment());
-        mFragments.add(new WeChatFragment());
+        mFragments.add(new CookBooksFragment());
+        mFragments.add(new HealthFragment());
         segmenttab.setTabData(mTitles);
-        viewpager.setAdapter(new MyPagerAdapter(getFragmentManager()));
+        viewpager.setAdapter(new MyPagerAdapter(getChildFragmentManager()));
         segmenttab.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {

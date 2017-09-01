@@ -1,6 +1,5 @@
 package com.wangdh.mengm.ui.Presenter;
 
-import android.util.Log;
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.WechatImage;

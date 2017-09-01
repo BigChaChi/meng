@@ -1,6 +1,7 @@
 package com.wangdh.mengm.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 微信fragment壁纸
@@ -10,148 +11,228 @@ public class WechatImage implements Serializable {
 
 
     /**
-     * showapi_res_code : 0
-     * showapi_res_error :
-     * showapi_res_body : {"ret_code":0,"ret_message":"Success","data":{"title":"耳朵的妙用","img_1920":"http://api.seqier.com/api/bing/img_1920","description":"这些有着巨大耳朵的狐狸属于犬科动物家族，它们的亲戚包括家养狗、豺和狼。这些独特的黑耳朵里面含有大量的血管，有助于调节非洲大草原上的体温。它们的耳朵在捕食时也会派上用场，耳朵贴在地上，大耳狐可以很容易的发现它最喜欢的食物：白蚁。","subtitle":"博茨瓦纳，卡格拉格帝跨境公园","copyright":"卡格拉格帝跨境公园内的两只大耳狐，博茨瓦纳 (© Richard Du Toit/Minden Pictures)","date":"20170826","img_1366":"http://api.seqier.com/api/bing/img_1366"}}
+     * images : [{"startdate":"20170829","fullstartdate":"201708291600","enddate":"20170830","url":"/az/hprichbg/rb/GoldenTrevally_ZH-CN8976794546_1920x1080.jpg","urlbase":"/az/hprichbg/rb/GoldenTrevally_ZH-CN8976794546","copyright":"一群金色无齿鲹与一条鲸鲨遨游在鸟头湾中，印度尼西亚 (© Pete Oxford/Minden Pictures)","copyrightlink":"http://www.bing.com/search?q=%E6%B5%B7%E6%B4%8B%E7%94%9F%E7%89%A9&form=hpcapt&mkt=zh-cn","quiz":"/search?q=Bing+homepage+quiz&filters=WQOskey:%22HPQuiz_20170829_GoldenTrevally%22&FORM=HPQUIZ","wp":true,"hsh":"a0ba8d64f5efd857ce276cb98fa877bc","drk":1,"top":1,"bot":1,"hs":[]}]
+     * tooltips : {"loading":"正在加载...","previous":"上一个图像","next":"下一个图像","walle":"此图片不能下载用作壁纸。","walls":"下载今日美图。仅限用作桌面壁纸。"}
      */
 
-    private int showapi_res_code;
-    private String showapi_res_error;
-    private ShowapiResBodyBean showapi_res_body;
+    private TooltipsBean tooltips;
+    private List<ImagesBean> images;
 
-    public int getShowapi_res_code() {
-        return showapi_res_code;
+    public TooltipsBean getTooltips() {
+        return tooltips;
     }
 
-    public void setShowapi_res_code(int showapi_res_code) {
-        this.showapi_res_code = showapi_res_code;
+    public void setTooltips(TooltipsBean tooltips) {
+        this.tooltips = tooltips;
     }
 
-    public String getShowapi_res_error() {
-        return showapi_res_error;
+    public List<ImagesBean> getImages() {
+        return images;
     }
 
-    public void setShowapi_res_error(String showapi_res_error) {
-        this.showapi_res_error = showapi_res_error;
+    public void setImages(List<ImagesBean> images) {
+        this.images = images;
     }
 
-    public ShowapiResBodyBean getShowapi_res_body() {
-        return showapi_res_body;
-    }
-
-    public void setShowapi_res_body(ShowapiResBodyBean showapi_res_body) {
-        this.showapi_res_body = showapi_res_body;
-    }
-
-    public static class ShowapiResBodyBean {
+    public static class TooltipsBean {
         /**
-         * ret_code : 0
-         * ret_message : Success
-         * data : {"title":"耳朵的妙用","img_1920":"http://api.seqier.com/api/bing/img_1920","description":"这些有着巨大耳朵的狐狸属于犬科动物家族，它们的亲戚包括家养狗、豺和狼。这些独特的黑耳朵里面含有大量的血管，有助于调节非洲大草原上的体温。它们的耳朵在捕食时也会派上用场，耳朵贴在地上，大耳狐可以很容易的发现它最喜欢的食物：白蚁。","subtitle":"博茨瓦纳，卡格拉格帝跨境公园","copyright":"卡格拉格帝跨境公园内的两只大耳狐，博茨瓦纳 (© Richard Du Toit/Minden Pictures)","date":"20170826","img_1366":"http://api.seqier.com/api/bing/img_1366"}
+         * loading : 正在加载...
+         * previous : 上一个图像
+         * next : 下一个图像
+         * walle : 此图片不能下载用作壁纸。
+         * walls : 下载今日美图。仅限用作桌面壁纸。
          */
 
-        private int ret_code;
-        private String ret_message;
-        private DataBean data;
+        private String loading;
+        private String previous;
+        private String next;
+        private String walle;
+        private String walls;
 
-        public int getRet_code() {
-            return ret_code;
+        public String getLoading() {
+            return loading;
         }
 
-        public void setRet_code(int ret_code) {
-            this.ret_code = ret_code;
+        public void setLoading(String loading) {
+            this.loading = loading;
         }
 
-        public String getRet_message() {
-            return ret_message;
+        public String getPrevious() {
+            return previous;
         }
 
-        public void setRet_message(String ret_message) {
-            this.ret_message = ret_message;
+        public void setPrevious(String previous) {
+            this.previous = previous;
         }
 
-        public DataBean getData() {
-            return data;
+        public String getNext() {
+            return next;
         }
 
-        public void setData(DataBean data) {
-            this.data = data;
+        public void setNext(String next) {
+            this.next = next;
         }
 
-        public static class DataBean {
-            /**
-             * title : 耳朵的妙用
-             * img_1920 : http://api.seqier.com/api/bing/img_1920
-             * description : 这些有着巨大耳朵的狐狸属于犬科动物家族，它们的亲戚包括家养狗、豺和狼。这些独特的黑耳朵里面含有大量的血管，有助于调节非洲大草原上的体温。它们的耳朵在捕食时也会派上用场，耳朵贴在地上，大耳狐可以很容易的发现它最喜欢的食物：白蚁。
-             * subtitle : 博茨瓦纳，卡格拉格帝跨境公园
-             * copyright : 卡格拉格帝跨境公园内的两只大耳狐，博茨瓦纳 (© Richard Du Toit/Minden Pictures)
-             * date : 20170826
-             * img_1366 : http://api.seqier.com/api/bing/img_1366
-             */
+        public String getWalle() {
+            return walle;
+        }
 
-            private String title;
-            private String img_1920;
-            private String description;
-            private String subtitle;
-            private String copyright;
-            private String date;
-            private String img_1366;
+        public void setWalle(String walle) {
+            this.walle = walle;
+        }
 
-            public String getTitle() {
-                return title;
-            }
+        public String getWalls() {
+            return walls;
+        }
 
-            public void setTitle(String title) {
-                this.title = title;
-            }
+        public void setWalls(String walls) {
+            this.walls = walls;
+        }
+    }
 
-            public String getImg_1920() {
-                return img_1920;
-            }
+    public static class ImagesBean {
+        /**
+         * startdate : 20170829
+         * fullstartdate : 201708291600
+         * enddate : 20170830
+         * url : /az/hprichbg/rb/GoldenTrevally_ZH-CN8976794546_1920x1080.jpg
+         * urlbase : /az/hprichbg/rb/GoldenTrevally_ZH-CN8976794546
+         * copyright : 一群金色无齿鲹与一条鲸鲨遨游在鸟头湾中，印度尼西亚 (© Pete Oxford/Minden Pictures)
+         * copyrightlink : http://www.bing.com/search?q=%E6%B5%B7%E6%B4%8B%E7%94%9F%E7%89%A9&form=hpcapt&mkt=zh-cn
+         * quiz : /search?q=Bing+homepage+quiz&filters=WQOskey:%22HPQuiz_20170829_GoldenTrevally%22&FORM=HPQUIZ
+         * wp : true
+         * hsh : a0ba8d64f5efd857ce276cb98fa877bc
+         * drk : 1
+         * top : 1
+         * bot : 1
+         * hs : []
+         */
 
-            public void setImg_1920(String img_1920) {
-                this.img_1920 = img_1920;
-            }
+        private String startdate;
+        private String fullstartdate;
+        private String enddate;
+        private String url;
+        private String urlbase;
+        private String copyright;
+        private String copyrightlink;
+        private String quiz;
+        private boolean wp;
+        private String hsh;
+        private int drk;
+        private int top;
+        private int bot;
+        private List<?> hs;
 
-            public String getDescription() {
-                return description;
-            }
+        public String getStartdate() {
+            return startdate;
+        }
 
-            public void setDescription(String description) {
-                this.description = description;
-            }
+        public void setStartdate(String startdate) {
+            this.startdate = startdate;
+        }
 
-            public String getSubtitle() {
-                return subtitle;
-            }
+        public String getFullstartdate() {
+            return fullstartdate;
+        }
 
-            public void setSubtitle(String subtitle) {
-                this.subtitle = subtitle;
-            }
+        public void setFullstartdate(String fullstartdate) {
+            this.fullstartdate = fullstartdate;
+        }
 
-            public String getCopyright() {
-                return copyright;
-            }
+        public String getEnddate() {
+            return enddate;
+        }
 
-            public void setCopyright(String copyright) {
-                this.copyright = copyright;
-            }
+        public void setEnddate(String enddate) {
+            this.enddate = enddate;
+        }
 
-            public String getDate() {
-                return date;
-            }
+        public String getUrl() {
+            return url;
+        }
 
-            public void setDate(String date) {
-                this.date = date;
-            }
+        public void setUrl(String url) {
+            this.url = url;
+        }
 
-            public String getImg_1366() {
-                return img_1366;
-            }
+        public String getUrlbase() {
+            return urlbase;
+        }
 
-            public void setImg_1366(String img_1366) {
-                this.img_1366 = img_1366;
-            }
+        public void setUrlbase(String urlbase) {
+            this.urlbase = urlbase;
+        }
+
+        public String getCopyright() {
+            return copyright;
+        }
+
+        public void setCopyright(String copyright) {
+            this.copyright = copyright;
+        }
+
+        public String getCopyrightlink() {
+            return copyrightlink;
+        }
+
+        public void setCopyrightlink(String copyrightlink) {
+            this.copyrightlink = copyrightlink;
+        }
+
+        public String getQuiz() {
+            return quiz;
+        }
+
+        public void setQuiz(String quiz) {
+            this.quiz = quiz;
+        }
+
+        public boolean isWp() {
+            return wp;
+        }
+
+        public void setWp(boolean wp) {
+            this.wp = wp;
+        }
+
+        public String getHsh() {
+            return hsh;
+        }
+
+        public void setHsh(String hsh) {
+            this.hsh = hsh;
+        }
+
+        public int getDrk() {
+            return drk;
+        }
+
+        public void setDrk(int drk) {
+            this.drk = drk;
+        }
+
+        public int getTop() {
+            return top;
+        }
+
+        public void setTop(int top) {
+            this.top = top;
+        }
+
+        public int getBot() {
+            return bot;
+        }
+
+        public void setBot(int bot) {
+            this.bot = bot;
+        }
+
+        public List<?> getHs() {
+            return hs;
+        }
+
+        public void setHs(List<?> hs) {
+            this.hs = hs;
         }
     }
 }

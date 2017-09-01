@@ -40,8 +40,11 @@ public class WechatListPresenter extends RxPresenter<WechatListContract.View>imp
              .subscribe(new DefaultSubscriber<WeChatListData>() {
                  @Override
                  public void onNext(WeChatListData data) {
-                 List<WeChatListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean> list=new ArrayList<WeChatListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean>();
-                     mView.showWechatlistDta(data);
+                     if(data.getShowapi_res_code()==0) {
+                         mView.showWechatlistDta(data);
+                     }else {
+                         mView.showError("数据加载失败");
+                     }
                  }
 
                  @Override

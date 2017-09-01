@@ -4,10 +4,13 @@
 
     <string name="tianq">天气预报</string>
     <string name="meizi">妹子图片</string>
-    <string name="sping">休息视频</string>
+    <string name="sping">搞笑视频</string>
 
     <string name="open">打开</string>
     <string name="close">关闭</string>
 
-
+    <string name="wechatfooter">按住拖拽排序，点击搜索搜索文章</string>
+    <string name="transition_pinchimageview">transition_pinchimageview</string>
+    <string name="wechat_select">微信精选</string>
+    <string name="hhxx">好好学习，天天向上</string>
 </resources>

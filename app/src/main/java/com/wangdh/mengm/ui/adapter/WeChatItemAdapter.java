@@ -1,13 +1,10 @@
 package com.wangdh.mengm.ui.adapter;
 
-import android.util.Log;
 import android.widget.ImageView;
-
 import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.bean.WeChatData;
-
 import java.util.List;
 
 public class WeChatItemAdapter  extends BaseItemDraggableAdapter<WeChatData,BaseViewHolder>{
