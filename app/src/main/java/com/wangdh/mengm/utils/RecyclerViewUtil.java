@@ -22,10 +22,20 @@ public class RecyclerViewUtil {
         recyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
     }
+
     public static  void initNoDecoration(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public static  void initHorizontal(Context context, RecyclerView recyclerView, RecyclerView.Adapter adapter) {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL));
         recyclerView.setAdapter(adapter);
     }
 //当 RecyclerView 外围嵌套 ScrollView 时，将滚动事件交予上层处理

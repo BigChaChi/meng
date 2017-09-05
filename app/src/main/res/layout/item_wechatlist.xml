@@ -7,7 +7,6 @@
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:orientation="vertical">
-    <!--图片大小为原始大小，如果图片大小大于ImageView控件，则截取图片中间部分，若小于，则直接将图片居中显示。-->
     <ImageView
         android:id="@+id/iv_wecharitem"
         android:layout_width="match_parent"

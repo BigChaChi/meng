@@ -5,8 +5,6 @@ import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.widget.FilterImageView;
-import com.wangdh.mengm.widget.PinchImageView;
-
 import butterknife.BindView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;

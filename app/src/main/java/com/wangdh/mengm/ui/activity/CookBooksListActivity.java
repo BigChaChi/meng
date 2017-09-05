@@ -1,24 +1,20 @@
 package com.wangdh.mengm.ui.activity;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
-import com.wangdh.mengm.bean.MeizhiData;
+import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerActivityComponent;
-import com.wangdh.mengm.ui.Presenter.MeizhiPresenter;
-import com.wangdh.mengm.ui.adapter.MeizhiAdapter;
-import com.wangdh.mengm.ui.contract.MeizhiContract;
+import com.wangdh.mengm.ui.Presenter.CookBooksListPresenter;
+import com.wangdh.mengm.ui.adapter.CookBooksItemAdapter;
+import com.wangdh.mengm.ui.contract.CookBooksListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
@@ -27,7 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 import butterknife.BindView;
 
-public class MeizhiPictureActivity extends BaseActivity implements MeizhiContract.View, BaseQuickAdapter.RequestLoadMoreListener {
+public class CookBooksListActivity extends BaseActivity implements CookBooksListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recycler)
@@ -36,11 +32,12 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    private List<MeizhiData.ResultsBean> mData = new ArrayList<>();
+    private List<CookBookslistData.ResultBeanX.ResultBean.ListBean> itemdata = new ArrayList<>();
+    private CookBooksItemAdapter adapter;
     @Inject
-    MeizhiPresenter mPresenter;
-    private MeizhiAdapter adapter;
-    private int page = 1;
+    CookBooksListPresenter mPresenter;
+    private int start = 0, num = 20;
+    private String classid;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -57,64 +54,30 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
 
     @Override
     protected void initView() {
+        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "菜单列表", this);
         mSwipe.setColorSchemeResources(R.color.colorPrimaryDark2, R.color.btn_blue, R.color.ywlogin_colorPrimaryDark);//设置进度动画的颜色
         mSwipe.setProgressViewOffset(true, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         mSwipe.setOnRefreshListener(() -> {
-            mData.clear();
-            page = 1;
-            mPresenter.getMeiZhiData("福利", page);
+            itemdata.clear();
+            start = 0;
+            mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));
         });
         setDataRefresh(true);
-        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "妹子图片", this);
-        adapter = new MeizhiAdapter(mData);
+        adapter = new CookBooksItemAdapter(itemdata);
         adapter.setOnLoadMoreListener(this, recycler);
-        RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
-        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            Intent intent = new Intent(this, PicturesActivity.class);
-            intent.putExtra("IMG_NAME", mData.get(position).get_id());
-            intent.putExtra("IMG_URL", mData.get(position).getUrl());
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    this,
-                    view.findViewById(R.id.iv_view),
-                    getString(R.string.transition_pinchimageview)
-            );
-            ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());
-        });
-
+        adapter.openLoadAnimation();
+        RecyclerViewUtil.init(this, recycler, adapter);
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
+        adapter.setOnItemChildClickListener((adapter1, view, position) ->
+             CookBooksDetails.startActivity(this,adapter.getItem(position))
+        );
     }
 
     @Override
     protected void initData() {
+        classid = getIntent().getStringExtra("classid");
         mPresenter.attachView(this);
-        mPresenter.getMeiZhiData("福利", page);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
-    }
-
-    @Override
-    public void showError(String s) {
-        toast(s);
-        setDataRefresh(false);
-        adapter.loadMoreEnd();
-    }
-
-    @Override
-    public void complete() {
-        setDataRefresh(false);
-    }
-
-    @Override
-    public void showMeizhiData(MeizhiData data) {
-        mData.addAll(data.getResults());
-        adapter.notifyDataSetChanged();
-        adapter.loadMoreComplete();
+        mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));
     }
 
     private void setDataRefresh(boolean refresh) {
@@ -126,12 +89,36 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     }
 
     @Override
+    public void showError(String s) {
+        toast(s);
+        setDataRefresh(false);
+        adapter.loadMoreFail();
+    }
+
+    @Override
+    public void complete() {
+        setDataRefresh(false);
+        adapter.loadMoreComplete();
+    }
+
+    @Override
+    public void showCookBooksListData(CookBookslistData data) {
+        if(data.getResult().getResult().getList().size()!=0){
+            itemdata.addAll(data.getResult().getResult().getList());
+            adapter.notifyDataSetChanged();
+        }else {
+            toast("数据加载失败");
+        }
+
+    }
+
+    @Override
     public void onLoadMoreRequested() {
-        if (mData.size() >= 20) {
+        if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(this)) {
-                    page=page+1;
-                    mPresenter.getMeiZhiData("福利", page);
+                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                    start=start+20;
+                    mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));
                 } else {
                     //获取更多数据失败
                     adapter.loadMoreFail();
@@ -139,6 +126,14 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
             }, 1000);
         } else {
             adapter.loadMoreEnd();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 }

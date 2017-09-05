@@ -6,6 +6,7 @@ import com.wangdh.mengm.bean.CookBooksData;
 import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.bean.FunnyPicturesData;
 import com.wangdh.mengm.bean.HealthitemData;
+import com.wangdh.mengm.bean.HealthitemListData;
 import com.wangdh.mengm.bean.JokeData;
 import com.wangdh.mengm.bean.MeizhiData;
 import com.wangdh.mengm.bean.NewListData;
@@ -89,5 +90,9 @@ public class RetrofitManager {
 
     public Flowable<VideoData> videoDataFlowable(Map<String, String> params){
         return service.videoRxjava(params);
+    }
+
+    public Flowable<HealthitemListData> healthitemListDataFlowable(Map<String, String> params){
+        return service.healthListRxjava(params);
     }
 }

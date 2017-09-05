@@ -21,12 +21,9 @@ import com.wangdh.mengm.ui.adapter.NewItemAdapter;
 import com.wangdh.mengm.ui.contract.NewListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 
 public class NewListFragment extends BaseFragment implements NewListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
@@ -145,7 +142,8 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    mPresenter.getNewlistData(mParam1, String.valueOf(num), String.valueOf(num++));
+                    start=start+20;
+                    mPresenter.getNewlistData(mParam1, String.valueOf(num), String.valueOf(start));
                 } else {
                     //获取更多数据失败
                     adapter.loadMoreFail();

@@ -16,6 +16,5 @@ public class CookBooksAdapter extends BaseQuickAdapter<CookBooksData.ResultBeanX
     protected void convert(BaseViewHolder helper, CookBooksData.ResultBeanX.ResultBean item) {
         helper.setText(R.id.cookbooks_tv,item.getName())
                 .addOnClickListener(R.id.cookbooks_item);
-
     }
 }

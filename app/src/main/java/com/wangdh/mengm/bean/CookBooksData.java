@@ -1,9 +1,10 @@
 package com.wangdh.mengm.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class CookBooksData {
+public class CookBooksData implements Serializable {
 
     /**
      * code : 10000
@@ -49,7 +50,7 @@ public class CookBooksData {
         this.result = result;
     }
 
-    public static class ResultBeanX {
+    public static class ResultBeanX implements Serializable{
         /**
          * status : 0
          * msg : ok
@@ -84,7 +85,7 @@ public class CookBooksData {
             this.result = result;
         }
 
-        public static class ResultBean {
+        public static class ResultBean implements Serializable{
             /**
              * classid : 1
              * name : 功效
@@ -129,7 +130,7 @@ public class CookBooksData {
                 this.list = list;
             }
 
-            public static class ListBean {
+            public static class ListBean implements Serializable{
                 /**
                  * classid : 2
                  * name : 减肥

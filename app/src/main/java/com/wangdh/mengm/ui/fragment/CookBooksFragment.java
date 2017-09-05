@@ -70,12 +70,9 @@ public class CookBooksFragment extends BaseFragment implements CookBooksContract
         LinearLayout mll2= (LinearLayout) headerView.findViewById(R.id.qutu);
         mll.setOnClickListener(v -> startActivity(new Intent(getActivity(),JokeActivity.class)));
         mll2.setOnClickListener(v -> startActivity(new Intent(getActivity(),FunnyPicturesActivity.class)));
-        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            String type=itemdata.get(position).getClassid();
-            Intent intent=new Intent(getActivity(),CookBooksActivity.class);
-            intent.putExtra("bookstype",type);
-            startActivity(intent);
-        });
+        adapter.setOnItemChildClickListener((adapter1, view, position) ->
+           CookBooksActivity.startActivity(getActivity(), adapter.getItem(position))
+        );
     }
 
     @Override

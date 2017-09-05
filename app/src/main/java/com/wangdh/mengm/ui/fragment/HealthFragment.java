@@ -1,5 +1,6 @@
 package com.wangdh.mengm.ui.fragment;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.wangdh.mengm.bean.HealthitemData;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerFragmentComponent;
 import com.wangdh.mengm.ui.Presenter.HealthFragmentPresenter;
+import com.wangdh.mengm.ui.activity.HealthListActivity;
 import com.wangdh.mengm.ui.adapter.HealthFragmentAdapter;
 import com.wangdh.mengm.ui.contract.HealthFragmentContract;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
@@ -52,7 +54,13 @@ public class HealthFragment extends BaseFragment implements HealthFragmentContra
     @Override
     protected void initView() {
         adapter=new HealthFragmentAdapter(itemdata);
-        RecyclerViewUtil.StaggeredGridinit(recycler,adapter);
+        RecyclerViewUtil.Gridinit(getContext(),recycler,adapter,2);
+        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+            Intent intent=new Intent(getActivity(),HealthListActivity.class);
+            intent.putExtra("tid",adapter.getItem(position).getId());
+            intent.putExtra("name",adapter.getItem(position).getName());
+            startActivity(intent);
+        });
     }
 
     @Override

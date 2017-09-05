@@ -1,6 +1,8 @@
 package com.wangdh.mengm.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
@@ -8,10 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.flaviofaria.kenburnsview.KenBurnsView;
@@ -20,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
+import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.bean.WeChatData;
 import com.wangdh.mengm.bean.WechatImage;
 import com.wangdh.mengm.component.AppComponent;
@@ -31,7 +31,12 @@ import com.wangdh.mengm.ui.contract.WeChatFragmentContract;
 import com.wangdh.mengm.utils.MyGlideImageLoader;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
-
+import com.wangdh.mengm.widget.FilterImageView;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +52,11 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
     private WeChatItemAdapter adapter;
     private List<WeChatData> Datas = new ArrayList<>();
     private Gson mGson = new Gson();
-    private String wechat_item = "wechat_item";
+    private String wechat_item = "wechat_item", imagename = "imagename";
     @Inject
     WeChatFragmentPresenter mPresenter;
-    private View headerView,footerView;
+    private View headerView, footerView;
+
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerFragmentComponent.builder()
@@ -99,7 +105,7 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
         // 开启拖拽
         adapter.enableDragItem(itemTouchHelper);
         adapter.setOnItemDragListener(onItemDragListener);
-        RecyclerViewUtil.Gridinit(getActivity(), recyclerWechat, adapter,3);
+        RecyclerViewUtil.Gridinit(getActivity(), recyclerWechat, adapter, 3);
         adapter.setHeaderView(getHeaderView());
         adapter.setFooterView(getFooterView());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
@@ -142,9 +148,10 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
 
     @Override
     public void showImageData(WechatImage data) {
-        TextView mtv= (TextView) headerView.findViewById(R.id.tv_bt);
-        mtv.setText(data.getImages().get(0).getCopyright());
-        MyGlideImageLoader.displayImage("http://www.bing.com"+data.getImages().get(0).getUrl(), imagWechat);
+        TextView mtv = (TextView) headerView.findViewById(R.id.tv_bt);
+        imagename = data.getImages().get(0).getCopyright();
+        mtv.setText(imagename);
+        MyGlideImageLoader.displayImage("http://www.bing.com" + data.getImages().get(0).getUrl(), imagWechat);
         imagWechat.setTransitionListener(new KenBurnsView.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
@@ -157,14 +164,18 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
             }
         });
     }
+
+
     public View getHeaderView() {
-        headerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview,(ViewGroup)recyclerWechat.getParent(),false);
+        headerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview, (ViewGroup) recyclerWechat.getParent(), false);
         return headerView;
     }
+
     public View getFooterView() {
-        footerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview,(ViewGroup)recyclerWechat.getParent(),false);
+        footerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview, (ViewGroup) recyclerWechat.getParent(), false);
         return footerView;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

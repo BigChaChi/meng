@@ -118,7 +118,8 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    mPresenter.getJokedata(page++);
+                    page=page+1;
+                    mPresenter.getJokedata(page);
                 } else {
                     //获取更多数据失败
                     adapter.loadMoreFail();

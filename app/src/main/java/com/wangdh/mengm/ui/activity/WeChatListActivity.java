@@ -68,9 +68,9 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
             mPresenter.getWechatlistDta(type, i);
         });
         adapter = new WechatListAdapter(itemdata);
-        RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
         adapter.setOnLoadMoreListener(this, recycler);
-        adapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_RIGHT);
+        adapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
+        RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             String url = itemdata.get(position).getUrl();
             Intent intent = new Intent(WeChatListActivity.this, WebViewDetailsActivity.class);
@@ -100,6 +100,7 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
     @Override
     public void complete() {
         mSwipe.setRefreshing(false);
+        adapter.loadMoreComplete();
         hideDialog();
     }
 
@@ -107,7 +108,7 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
     public void showWechatlistDta(WeChatListData data) {
         itemdata.addAll(data.getShowapi_res_body().getPagebean().getContentlist());
         adapter.notifyDataSetChanged();
-        adapter.loadMoreComplete();
+
     }
 
     @Override
@@ -123,7 +124,8 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    mPresenter.getWechatlistDta(type, i++);
+                    i=i+1;
+                    mPresenter.getWechatlistDta(type, i);
                 } else {
                     //获取更多数据失败
                     adapter.loadMoreFail();

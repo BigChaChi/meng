@@ -3,16 +3,15 @@ package com.wangdh.mengm.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.design.internal.NavigationMenu;
 import android.view.MenuItem;
 
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
+import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.utils.MyGlideImageLoader;
 import com.wangdh.mengm.widget.PinchImageView;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,8 +27,7 @@ public class PicturesActivity extends BaseActivity {
     PinchImageView phoioview;
     @BindView(R.id.fab_speed_dial)
     FabSpeedDial fab;
-    private static final String SAVED_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/meng";
-
+    private Bitmap bitmap;
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
 
@@ -57,7 +55,18 @@ public class PicturesActivity extends BaseActivity {
                         onBackPressed();//当用户在按这个键的时候，会调用这个方法
                         break;
                     case R.id.action_save:
-                        saveImage();
+                        toast("图片保存在" + Constant.SAVED_PATH);
+                        phoioview.buildDrawingCache();
+                        bitmap = phoioview.getDrawingCache();
+                        if (bitmap == null) {
+                            toast("无法下载到图片,请检查网络");
+                        }
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                saveImage();
+                            }
+                        }.start();
                         break;
                 }
                 return true;
@@ -81,17 +90,11 @@ public class PicturesActivity extends BaseActivity {
      * 保存图片
      */
     private void saveImage() {
-        toast("图片保存在" + SAVED_PATH);
-        phoioview.buildDrawingCache();
-        Bitmap bitmap = phoioview.getDrawingCache();
-        if (bitmap == null) {
-            toast("无法下载到图片,请检查网络");
-        }
         //将bitmap转换成二进制，写入本地
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        File dir = new File(SAVED_PATH);
+        File dir = new File(Constant.SAVED_PATH);
         if (!dir.exists()) {
             dir.mkdir();
         }

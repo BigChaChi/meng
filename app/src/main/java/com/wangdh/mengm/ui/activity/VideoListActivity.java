@@ -109,7 +109,8 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    mPresenter.getVideolistData(String.valueOf(page++));
+                    page=page+1;
+                    mPresenter.getVideolistData(String.valueOf(page));
                 } else {
                     //获取更多数据失败
                     adapter.loadMoreFail();

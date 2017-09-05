@@ -1,17 +1,17 @@
 package com.wangdh.mengm.api;
+
 import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.CookBooksData;
 import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.bean.FunnyPicturesData;
 import com.wangdh.mengm.bean.HealthitemData;
+import com.wangdh.mengm.bean.HealthitemListData;
 import com.wangdh.mengm.bean.JokeData;
 import com.wangdh.mengm.bean.MeizhiData;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.bean.VideoData;
 import com.wangdh.mengm.bean.WeChatListData;
 import com.wangdh.mengm.bean.WechatImage;
-import com.wangdh.mengm.ui.activity.FunnyPicturesActivity;
-
 import java.util.Map;
 import io.reactivex.Flowable;
 import retrofit2.http.GET;
@@ -40,6 +40,9 @@ public interface ApiService {
     @GET("90-86?showapi_appid=44640&showapi_sign=f255043723fe40839e61f6a40a6b0741")
     Flowable<HealthitemData> healthRxjava();
 
+    @GET("90-87")
+    Flowable<HealthitemListData> healthListRxjava(@QueryMap Map<String, String> params);
+
     @GET("582-2")
     Flowable<WeChatListData> weCharListDataRxjava(@QueryMap Map<String, String> params);
 
@@ -54,7 +57,7 @@ public interface ApiService {
     Flowable<FunnyPicturesData> FunnyPicturesRxjava(@Path("type") String type, @QueryMap Map<String, String> params);
 
     @GET("http://gank.io/api/data/{type}/20/{page}")
-    Flowable<MeizhiData> MeiZhiRxjava(@Path("type") String type,@Path("page") int page);
+    Flowable<MeizhiData> MeiZhiRxjava(@Path("type") String type, @Path("page") int page);
 
     @GET("255-1")
     Flowable<VideoData> videoRxjava(@QueryMap Map<String, String> params);

@@ -3,22 +3,19 @@ package com.wangdh.mengm.ui.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
-import com.wangdh.mengm.bean.MeizhiData;
+import com.wangdh.mengm.bean.HealthitemListData;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerActivityComponent;
-import com.wangdh.mengm.ui.Presenter.MeizhiPresenter;
-import com.wangdh.mengm.ui.adapter.MeizhiAdapter;
-import com.wangdh.mengm.ui.contract.MeizhiContract;
+import com.wangdh.mengm.ui.Presenter.HealthListPresenter;
+import com.wangdh.mengm.ui.adapter.HealthListAdapter;
+import com.wangdh.mengm.ui.contract.HealthListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
@@ -27,7 +24,7 @@ import java.util.List;
 import javax.inject.Inject;
 import butterknife.BindView;
 
-public class MeizhiPictureActivity extends BaseActivity implements MeizhiContract.View, BaseQuickAdapter.RequestLoadMoreListener {
+public class HealthListActivity extends BaseActivity implements HealthListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.recycler)
@@ -36,11 +33,12 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    private List<MeizhiData.ResultsBean> mData = new ArrayList<>();
-    @Inject
-    MeizhiPresenter mPresenter;
-    private MeizhiAdapter adapter;
+    private String id,name;
     private int page = 1;
+    @Inject
+    HealthListPresenter mPresenter;
+    private HealthListAdapter adapter;
+    private List<HealthitemListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean> itemData = new ArrayList<>();
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -60,49 +58,37 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         mSwipe.setColorSchemeResources(R.color.colorPrimaryDark2, R.color.btn_blue, R.color.ywlogin_colorPrimaryDark);//设置进度动画的颜色
         mSwipe.setProgressViewOffset(true, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         mSwipe.setOnRefreshListener(() -> {
-            mData.clear();
+            itemData.clear();
             page = 1;
-            mPresenter.getMeiZhiData("福利", page);
+            mPresenter.getHealthListData(id, String.valueOf(page));
         });
         setDataRefresh(true);
-        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "妹子图片", this);
-        adapter = new MeizhiAdapter(mData);
+        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "健康."+name, this);
+        adapter = new HealthListAdapter(itemData);
+        adapter.openLoadAnimation();
         adapter.setOnLoadMoreListener(this, recycler);
-        RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
-        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            Intent intent = new Intent(this, PicturesActivity.class);
-            intent.putExtra("IMG_NAME", mData.get(position).get_id());
-            intent.putExtra("IMG_URL", mData.get(position).getUrl());
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    this,
-                    view.findViewById(R.id.iv_view),
-                    getString(R.string.transition_pinchimageview)
-            );
-            ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());
-        });
-
+        RecyclerViewUtil.init(this, recycler, adapter);
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
+        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+            String url=adapter.getItem(position).getWapurl();
+            Intent intent=new Intent(this,WebViewDetailsActivity.class);
+            intent.putExtra("wechaturl", url);
+            startActivity(intent);
+        });
     }
 
     @Override
     protected void initData() {
+        id = getIntent().getStringExtra("tid");
+        name=getIntent().getStringExtra("name");
         mPresenter.attachView(this);
-        mPresenter.getMeiZhiData("福利", page);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+        mPresenter.getHealthListData(id, String.valueOf(page));
     }
 
     @Override
     public void showError(String s) {
         toast(s);
         setDataRefresh(false);
-        adapter.loadMoreEnd();
     }
 
     @Override
@@ -111,10 +97,14 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     }
 
     @Override
-    public void showMeizhiData(MeizhiData data) {
-        mData.addAll(data.getResults());
-        adapter.notifyDataSetChanged();
-        adapter.loadMoreComplete();
+    public void showHealthListData(HealthitemListData data) {
+        if (data.getShowapi_res_body().getPagebean().getContentlist() != null) {
+            itemData.addAll(data.getShowapi_res_body().getPagebean().getContentlist());
+            adapter.notifyDataSetChanged();
+            adapter.loadMoreComplete();
+        } else {
+            toast("数据加载失败");
+        }
     }
 
     private void setDataRefresh(boolean refresh) {
@@ -127,13 +117,12 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
 
     @Override
     public void onLoadMoreRequested() {
-        if (mData.size() >= 20) {
+        if (itemData.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(this)) {
+                if (NetworkUtil.isAvailable(recycler.getContext())) {
                     page=page+1;
-                    mPresenter.getMeiZhiData("福利", page);
+                    mPresenter.getHealthListData(id, String.valueOf(page));
                 } else {
-                    //获取更多数据失败
                     adapter.loadMoreFail();
                 }
             }, 1000);
@@ -141,4 +130,14 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
             adapter.loadMoreEnd();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+    }
+
+
 }

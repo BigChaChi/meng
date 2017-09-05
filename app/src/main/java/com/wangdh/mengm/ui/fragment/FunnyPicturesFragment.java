@@ -84,6 +84,7 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
             mPresenter.getFunnyPicturesData(mParam, String.valueOf(page));
         });
         adapter = new FunnyPicturesApapter(mData);
+        adapter.setOnLoadMoreListener(this, recycler);
         RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             FunnyPicturesData.ShowapiResBodyBean.ContentlistBean bean = mData.get(position);
@@ -118,7 +119,6 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
     public void showFunnyPicturesData(FunnyPicturesData data) {
         mData.addAll(data.getShowapi_res_body().getContentlist());
         adapter.notifyDataSetChanged();
-        adapter.loadMoreComplete();
     }
 
     @Override
@@ -134,6 +134,7 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
+                    page=page+1;
                     mPresenter.getFunnyPicturesData(mParam, String.valueOf(page++));
                 } else {
                     //获取更多数据失败
