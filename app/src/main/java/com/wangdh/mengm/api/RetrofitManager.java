@@ -12,6 +12,7 @@ import com.wangdh.mengm.bean.MeizhiData;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.bean.VideoData;
 import com.wangdh.mengm.bean.WeChatListData;
+import com.wangdh.mengm.bean.WeatherAllData;
 import com.wangdh.mengm.bean.WechatImage;
 
 import java.util.List;
@@ -94,5 +95,9 @@ public class RetrofitManager {
 
     public Flowable<HealthitemListData> healthitemListDataFlowable(Map<String, String> params){
         return service.healthListRxjava(params);
+    }
+
+    public Flowable<WeatherAllData> weatherAllDataFlowable(Map<String, String> params){
+        return service.weatherRxjava(params);
     }
 }

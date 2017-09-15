@@ -111,7 +111,7 @@ public class MainActivity extends BaseActivity {
         navView.setNavigationItemSelectedListener((item) -> {
             switch (item.getItemId()) {
                 case R.id.weatheritem:
-
+                    startActivity(new Intent(this,WeatherActivity.class));
                     break;
                 case R.id.pictureitem:
                     startActivity(new Intent(this,MeizhiPictureActivity.class));

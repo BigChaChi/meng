@@ -35,7 +35,11 @@ public class CookBooksListPresenter extends RxPresenter<CookBooksListContract.Vi
                     @Override
                     public void onNext(CookBookslistData cookBookslistData) {
                       if(cookBookslistData.getCode().equals("10000")&&cookBookslistData!=null){
-                          mView.showCookBooksListData(cookBookslistData);
+                          try {
+                              mView.showCookBooksListData(cookBookslistData);
+                          }catch (Exception e){
+                              mView.showError(e.getMessage());
+                          }
                       }else {
                           mView.showError("数据加载失败");
                       }

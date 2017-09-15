@@ -84,8 +84,8 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
             mPresenter.getFunnyPicturesData(mParam, String.valueOf(page));
         });
         adapter = new FunnyPicturesApapter(mData);
-        adapter.setOnLoadMoreListener(this, recycler);
         RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
+        adapter.setOnLoadMoreListener(this, recycler);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             FunnyPicturesData.ShowapiResBodyBean.ContentlistBean bean = mData.get(position);
             Intent intent = new Intent(getActivity(), PicturesActivity.class);

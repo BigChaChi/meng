@@ -19,7 +19,7 @@ public class HealthListAdapter extends BaseQuickAdapter<HealthitemListData.Showa
     protected void convert(BaseViewHolder helper, HealthitemListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean item) {
         helper.setText(R.id.cook_name,item.getTitle())
                 .setText(R.id.cook_text,item.getIntro())
-                .setText(R.id.time, item.getCtime())
+                .setText(R.id.time, "")
                 .setText(R.id.num,item.getTname())
                 .addOnClickListener(R.id.cook_item);
         MyGlideImageLoader.displayImage(item.getImg(),helper.getView(R.id.cook_image));

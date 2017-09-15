@@ -7,5 +7,6 @@ public class Constant {
     public static final String jcloudKey="6d119cf4202fec65d699ebb68d1d6e5f";
     public static final String showapi_sign="f255043723fe40839e61f6a40a6b0741";
     public static final String showapi_appid="44640";
+    public static final String weatherKey="65f888e8c8ef49539f89a249a5e296ed";
     public static final String SAVED_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/meng";
 }

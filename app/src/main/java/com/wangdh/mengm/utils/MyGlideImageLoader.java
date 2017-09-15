@@ -143,4 +143,9 @@ public class MyGlideImageLoader  {
                 .crossFade()
                 .into(imageView);
     }
+
+    //加载本地图片
+    public static void Image(int url, ImageView imageView) {
+        Glide.with(mContext).load(url).crossFade().into(imageView);
+    }
 }

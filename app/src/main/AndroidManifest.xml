@@ -58,22 +58,32 @@
             android:name=".ui.activity.PicturesActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.MeizhiPictureActivity"
+        <activity
+            android:name=".ui.activity.MeizhiPictureActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.VideoListActivity"
+        <activity
+            android:name=".ui.activity.VideoListActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.VideoActivity"
+        <activity
+            android:name=".ui.activity.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" /> <!-- or android:screenOrientation="landscape"-->
 
-        <activity android:name=".ui.activity.CookBooksListActivity"
+        <activity
+            android:name=".ui.activity.CookBooksListActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.CookBooksDetails"
+        <activity
+            android:name=".ui.activity.CookBooksDetails"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.activity.HealthListActivity"
+        <activity
+            android:name=".ui.activity.HealthListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.WeatherActivity"
             android:screenOrientation="portrait" />
 
     </application>

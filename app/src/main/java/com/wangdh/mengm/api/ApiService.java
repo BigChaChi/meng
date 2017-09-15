@@ -11,6 +11,7 @@ import com.wangdh.mengm.bean.MeizhiData;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.bean.VideoData;
 import com.wangdh.mengm.bean.WeChatListData;
+import com.wangdh.mengm.bean.WeatherAllData;
 import com.wangdh.mengm.bean.WechatImage;
 import java.util.Map;
 import io.reactivex.Flowable;
@@ -36,6 +37,9 @@ public interface ApiService {
 
     @GET("https://way.jd.com/jisuapi/byclass")
     Flowable<CookBookslistData> cookbooksListRxjava(@QueryMap Map<String, String> params);
+
+    @GET("https://free-api.heweather.com/v5/weather")
+    Flowable<WeatherAllData> weatherRxjava(@QueryMap Map<String, String> params);
 
     @GET("90-86?showapi_appid=44640&showapi_sign=f255043723fe40839e61f6a40a6b0741")
     Flowable<HealthitemData> healthRxjava();

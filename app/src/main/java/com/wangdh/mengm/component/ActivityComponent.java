@@ -7,6 +7,7 @@ import com.wangdh.mengm.ui.activity.MeizhiPictureActivity;
 import com.wangdh.mengm.ui.activity.SplashActivity;
 import com.wangdh.mengm.ui.activity.VideoListActivity;
 import com.wangdh.mengm.ui.activity.WeChatListActivity;
+import com.wangdh.mengm.ui.activity.WeatherActivity;
 
 import dagger.Component;
 
@@ -22,4 +23,5 @@ public interface ActivityComponent {
     VideoListActivity inject(VideoListActivity activity);
     CookBooksListActivity inject(CookBooksListActivity activity);
     HealthListActivity inject(HealthListActivity activity);
+    WeatherActivity inject(WeatherActivity activity);
 }
