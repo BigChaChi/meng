@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/tv_wd"
         android:id="@+id/temp_layout"
         android:layout_width="wrap_content"
@@ -48,7 +47,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/temp_layout"
         android:textSize="20sp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:id="@+id/tv_q"
         android:text="晴"
         android:layout_width="wrap_content"
@@ -56,7 +55,7 @@
 
     <TextView
         android:id="@+id/tv_zl"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:textSize="14sp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/tv_q"
@@ -67,7 +66,7 @@
 <ImageView
     android:id="@+id/iv"
     android:layout_centerVertical="true"
-    android:layout_marginRight="10sp"
+    android:layout_marginRight="5dp"
     android:layout_alignParentRight="true"
 
     android:layout_width="wrap_content"

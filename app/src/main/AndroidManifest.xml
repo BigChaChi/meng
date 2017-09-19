@@ -86,6 +86,9 @@
             android:name=".ui.activity.WeatherActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.activity.SearchWeatherActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -21,6 +21,15 @@
             android:layout_height="wrap_content"
             android:text="短时预报" />
 
+
+        <TextView
+            android:id="@+id/no_data"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="暂时没有数据"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

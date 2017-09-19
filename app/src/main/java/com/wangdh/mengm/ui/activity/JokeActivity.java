@@ -70,6 +70,7 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         adapter.openLoadAnimation();
         adapter.setOnLoadMoreListener(this, recycler);
         RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
+        fab.setOnClickListener(v -> recycler.scrollToPosition(0));
     }
 
     @Override

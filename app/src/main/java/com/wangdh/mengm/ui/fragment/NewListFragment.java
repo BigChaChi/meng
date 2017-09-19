@@ -106,7 +106,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 800);//延时消失加载的loading
         }
     }
 
