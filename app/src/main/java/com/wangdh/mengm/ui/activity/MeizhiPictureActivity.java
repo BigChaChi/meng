@@ -1,13 +1,13 @@
 package com.wangdh.mengm.ui.activity;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -41,7 +41,7 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     MeizhiPresenter mPresenter;
     private MeizhiAdapter adapter;
     private int page = 1;
-
+    private Runnable runnable;
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerActivityComponent.builder()
@@ -64,7 +64,7 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
             page = 1;
             mPresenter.getMeiZhiData("福利", page);
         });
-        setDataRefresh(true);
+        mSwipe.setRefreshing(true);
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "妹子图片", this);
         adapter = new MeizhiAdapter(mData);
         adapter.setOnLoadMoreListener(this, recycler);
@@ -90,24 +90,18 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         mPresenter.getMeiZhiData("福利", page);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
-    }
+
 
     @Override
     public void showError(String s) {
         toast(s);
-        setDataRefresh(false);
+        mSwipe.setRefreshing(false);
         adapter.loadMoreEnd();
     }
 
     @Override
     public void complete() {
-        setDataRefresh(false);
+        mSwipe.setRefreshing(false);
     }
 
     @Override
@@ -117,13 +111,14 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         adapter.loadMoreComplete();
     }
 
-    private void setDataRefresh(boolean refresh) {
-        if (refresh) {
-            mSwipe.setRefreshing(refresh);
-        } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
-        }
-    }
+//    private void setDataRefresh(boolean refresh) {
+//        if (refresh) {
+//            mSwipe.setRefreshing(refresh);
+//        } else {
+//                runnable = () -> mSwipe.setRefreshing(refresh);
+//                mSwipe.postDelayed(runnable, 1000);//延时消失加载的loading
+//        }
+//    }
 
     @Override
     public void onLoadMoreRequested() {
@@ -140,5 +135,13 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         } else {
             adapter.loadMoreEnd();
         }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
+
     }
 }

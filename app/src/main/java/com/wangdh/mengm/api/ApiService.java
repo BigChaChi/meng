@@ -38,6 +38,9 @@ public interface ApiService {
     @GET("https://way.jd.com/jisuapi/byclass")
     Flowable<CookBookslistData> cookbooksListRxjava(@QueryMap Map<String, String> params);
 
+    @GET("https://way.jd.com/jisuapi/search")
+    Flowable<CookBookslistData> cookbooksSearchRxjava(@QueryMap Map<String, String> params);
+
     @GET("https://free-api.heweather.com/v5/weather")
     Flowable<WeatherAllData> weatherRxjava(@QueryMap Map<String, String> params);
 

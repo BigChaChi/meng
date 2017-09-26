@@ -33,7 +33,12 @@ public class JokeActivityPresenter extends RxPresenter<JokeActivityContract.View
                     @Override
                     public void onNext(JokeData data) {
                         if(data.getShowapi_res_code()==0){
-                            mView.showJokedata(data);
+                            try {
+                                mView.showJokedata(data);
+                            }catch (NullPointerException e){
+
+                            }
+
                         }else {
                             mView.showError("数据加载失败");
                         }
@@ -46,10 +51,10 @@ public class JokeActivityPresenter extends RxPresenter<JokeActivityContract.View
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
+                        if(mView!=null){
+                            mView.complete();
+                        }
                     }
                 });
-
-
     }
 }

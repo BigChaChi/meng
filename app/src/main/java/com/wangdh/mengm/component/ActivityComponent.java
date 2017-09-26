@@ -4,6 +4,7 @@ import com.wangdh.mengm.ui.activity.CookBooksListActivity;
 import com.wangdh.mengm.ui.activity.HealthListActivity;
 import com.wangdh.mengm.ui.activity.JokeActivity;
 import com.wangdh.mengm.ui.activity.MeizhiPictureActivity;
+import com.wangdh.mengm.ui.activity.SearchCookBooksActivity;
 import com.wangdh.mengm.ui.activity.SplashActivity;
 import com.wangdh.mengm.ui.activity.VideoListActivity;
 import com.wangdh.mengm.ui.activity.WeChatListActivity;
@@ -24,4 +25,5 @@ public interface ActivityComponent {
     CookBooksListActivity inject(CookBooksListActivity activity);
     HealthListActivity inject(HealthListActivity activity);
     WeatherActivity inject(WeatherActivity activity);
+    SearchCookBooksActivity inject(SearchCookBooksActivity activity);
 }

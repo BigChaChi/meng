@@ -64,7 +64,6 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
             page = 1;
             mPresenter.getJokedata(page);
         });
-        setDataRefresh(true);
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "笑话", this);
         adapter = new JokeAdapter(mData);
         adapter.openLoadAnimation();
@@ -75,6 +74,7 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
 
     @Override
     protected void initData() {
+        setDataRefresh(true);
         mPresenter.attachView(this);
         mPresenter.getJokedata(page);
     }
@@ -102,7 +102,14 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+            new Handler().postDelayed(() -> {
+                try {
+                    mSwipe.setRefreshing(refresh);
+                } catch (NullPointerException e) {
+                    e.getMessage();
+                }
+
+            }, 800);//延时消失加载的loading
         }
     }
 
@@ -119,7 +126,7 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    page=page+1;
+                    page = page + 1;
                     mPresenter.getJokedata(page);
                 } else {
                     //获取更多数据失败

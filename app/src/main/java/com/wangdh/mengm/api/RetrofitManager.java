@@ -14,10 +14,7 @@ import com.wangdh.mengm.bean.VideoData;
 import com.wangdh.mengm.bean.WeChatListData;
 import com.wangdh.mengm.bean.WeatherAllData;
 import com.wangdh.mengm.bean.WechatImage;
-
-import java.util.List;
 import java.util.Map;
-
 import io.reactivex.Flowable;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -75,6 +72,10 @@ public class RetrofitManager {
 
     public Flowable<CookBookslistData> cookBookslistDataFlowable(Map<String, String> params) {
         return service.cookbooksListRxjava(params);
+    }
+
+    public Flowable<CookBookslistData> cookBooksSearchFlowable(Map<String, String> params){
+        return service.cookbooksSearchRxjava(params);
     }
 
     public Flowable<JokeData> jokeDataFlowable(Map<String, String> params) {

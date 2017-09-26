@@ -2,6 +2,8 @@ package com.wangdh.mengm.ui.activity;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +39,8 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
     RecyclerView mRecyclerView;
     @BindView(R.id.mSwipe)
     SwipeRefreshLayout mSwipe;
+    @BindView(R.id.coord)
+    CoordinatorLayout mCoord;
     @Inject
     WeatherActivityPresenter mPresenter;
     private WeatherAdapter adapter;
@@ -100,6 +104,14 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, mData.getHeWeather5().get(0).getBasic().getCity(), this);
         adapter = new WeatherAdapter(mData);
         RecyclerViewUtil.initNoDecoration(this, mRecyclerView, adapter);
+        int code=mData.getHeWeather5().get(0).getNow().getCond().getCode();
+
+        if (code==100){
+            mCoord.setBackgroundColor(ContextCompat.getColor(this,R.color.colorSendName6));
+        }else if(code==104){
+            mCoord.setBackgroundColor(ContextCompat.getColor(this,R.color.color_54698a));
+        }
+
     }
 
     @Override

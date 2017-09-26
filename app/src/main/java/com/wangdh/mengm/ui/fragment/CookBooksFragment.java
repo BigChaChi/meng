@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
@@ -17,6 +18,7 @@ import com.wangdh.mengm.ui.Presenter.CookBooksPresenter;
 import com.wangdh.mengm.ui.activity.CookBooksActivity;
 import com.wangdh.mengm.ui.activity.FunnyPicturesActivity;
 import com.wangdh.mengm.ui.activity.JokeActivity;
+import com.wangdh.mengm.ui.activity.SearchCookBooksActivity;
 import com.wangdh.mengm.ui.adapter.CookBooksAdapter;
 import com.wangdh.mengm.ui.contract.CookBooksContract;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
@@ -68,8 +70,10 @@ public class CookBooksFragment extends BaseFragment implements CookBooksContract
         RecyclerViewUtil.initNoDecoration(getContext(), recycler, adapter);
         LinearLayout mll= (LinearLayout) headerView.findViewById(R.id.xiaoh);
         LinearLayout mll2= (LinearLayout) headerView.findViewById(R.id.qutu);
+        EditText mEt= (EditText) headerView.findViewById(R.id.edit);
         mll.setOnClickListener(v -> startActivity(new Intent(getActivity(),JokeActivity.class)));
         mll2.setOnClickListener(v -> startActivity(new Intent(getActivity(),FunnyPicturesActivity.class)));
+        mEt.setOnClickListener(v -> startActivity(new Intent(getActivity(),SearchCookBooksActivity.class)));
         adapter.setOnItemChildClickListener((adapter1, view, position) ->
            CookBooksActivity.startActivity(getActivity(), adapter.getItem(position))
         );

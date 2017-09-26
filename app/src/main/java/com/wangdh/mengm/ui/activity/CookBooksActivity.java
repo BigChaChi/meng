@@ -8,6 +8,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.bean.CookBooksData;
@@ -29,7 +32,7 @@ public class CookBooksActivity extends BaseActivity {
     private CookBooksData.ResultBeanX.ResultBean itemdata;
     public static final String INTENT_BEAN = "cookbooksList";
     private CookBooksListAdapter adapter;
-
+    private Handler handler=new Handler();
     public static void startActivity(Context context, CookBooksData.ResultBeanX.ResultBean cookbooksList) {
         context.startActivity(new Intent(context, CookBooksActivity.class)
                 .putExtra(INTENT_BEAN, cookbooksList));
@@ -50,7 +53,7 @@ public class CookBooksActivity extends BaseActivity {
         mSwipe.setColorSchemeResources(R.color.colorPrimaryDark2, R.color.btn_blue, R.color.ywlogin_colorPrimaryDark);//设置进度动画的颜色
         mSwipe.setProgressViewOffset(true, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         mSwipe.setOnRefreshListener(() ->
-                new Handler().postDelayed(() -> mSwipe.setRefreshing(false), 1000));
+                handler.postDelayed(() -> mSwipe.setRefreshing(false), 1000));
         mFab.setOnClickListener(v -> recycler.scrollToPosition(0));
     }
     @Override
@@ -68,5 +71,25 @@ public class CookBooksActivity extends BaseActivity {
             intent.putExtra("classid",itemdata.getList().get(position).getClassid());
             startActivity(intent);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_search) {
+            startActivity(new Intent(this, SearchCookBooksActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

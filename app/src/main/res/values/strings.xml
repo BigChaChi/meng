@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">mengm</string>
     <string name="skip">跳过</string>
-
+    <string name="exit_tips">再按一次退出程序</string>
     <string name="tianq">天气预报</string>
     <string name="meizi">妹子图片</string>
     <string name="sping">搞笑视频</string>

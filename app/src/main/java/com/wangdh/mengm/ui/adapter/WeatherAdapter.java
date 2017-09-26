@@ -128,10 +128,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             try {
                 mTv.setText(String.format("%s℃", weather.getHeWeather5().get(0).getNow().getTmp()));
                 mTq.setText(weather.getHeWeather5().get(0).getNow().getCond().getTxt());
-                mTzl.setText(String.format("空气质量:%s", weather.getHeWeather5().get(0).getAqi().getCity().getQlty()));
+                mTzl.setText(weather.getHeWeather5().get(0).getAqi().getCity().getQlty());
                 Tmax.setText(String.format("↑%s℃", weather.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp().getMax()));
                 Tmin.setText(String.format("↓%s℃", weather.getHeWeather5().get(0).getDaily_forecast().get(0).getTmp().getMin()));
-                mIv.setImageResource(image());
+                int code=weather.getHeWeather5().get(0).getNow().getCond().getCode();
+                mIv.setImageResource(image(code));
             } catch (Exception e) {
                 Log.i("toast", e.getMessage());
             }
@@ -172,18 +173,21 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         protected void bind(WeatherAllData weatherAllData) {
             List<WeatherAllData.HeWeather5Bean.DailyForecastBean> data = weatherAllData.getHeWeather5().get(0).getDaily_forecast();
             t1.setText(String.format("今天/%s", data.get(0).getDate().substring(data.get(0).getDate().length() - 5)));
-            i1.setImageResource(image());
-            tq1.setText(data.get(0).getCond().getCode_d() + "/" + data.get(0).getWind().getDir());
+            int code=data.get(0).getCond().getCode_d();
+            i1.setImageResource(image(code));
+            tq1.setText(data.get(0).getCond().getTxt_d() + "/" + data.get(0).getWind().getDir());
             wd1.setText(data.get(0).getTmp().getMax() + "℃～" + data.get(0).getTmp().getMin() + "℃");
 
             t2.setText(String.format("明天/%s", data.get(1).getDate().substring(data.get(1).getDate().length() - 5)));
-            i2.setImageResource(image());
-            tq2.setText(data.get(1).getCond().getCode_d() + "/" + data.get(1).getWind().getDir());
+            int code2=data.get(1).getCond().getCode_d();
+            i2.setImageResource(image(code2));
+            tq2.setText(data.get(1).getCond().getTxt_d() + "/" + data.get(1).getWind().getDir());
             wd2.setText(data.get(1).getTmp().getMax() + "℃～" + data.get(1).getTmp().getMin() + "℃");
 
             t3.setText(String.format("后天/%s", data.get(2).getDate().substring(data.get(2).getDate().length() - 5)));
-            i3.setImageResource(image());
-            tq3.setText(data.get(2).getCond().getCode_d() + "/" + data.get(2).getWind().getDir());
+            int code3=data.get(2).getCond().getCode_d();
+            i3.setImageResource(image(code3));
+            tq3.setText(data.get(2).getCond().getTxt_d() + "/" + data.get(2).getWind().getDir());
             wd3.setText(data.get(2).getTmp().getMax() + "℃～" + data.get(2).getTmp().getMin() + "℃");
         }
     }
@@ -251,37 +255,37 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             tvT1.setText(String.format("空气指数─%s", data.getAir().getBrf()));
             tvTxt1.setText(data.getAir().getTxt());
-            image1.setImageResource(R.mipmap.w100);
+            image1.setImageResource(R.mipmap.s_kq);
 
 
             tvT2.setText(String.format("舒适度指数─%s", data.getComf().getBrf()));
             tvTxt2.setText(data.getComf().getTxt());
-            image2.setImageResource(R.mipmap.w100);
+            image2.setImageResource(R.mipmap.s_ssd);
 
 
             tvT3.setText(String.format("洗车指数─%s", data.getCw().getBrf()));
             tvTxt3.setText(data.getCw().getTxt());
-            image3.setImageResource(R.mipmap.w100);
+            image3.setImageResource(R.mipmap.s_xc);
 
             tvT4.setText(String.format("穿衣指数─%s", data.getDrsg().getBrf()));
             tvTxt4.setText(data.getDrsg().getTxt());
-            image4.setImageResource(R.mipmap.w100);
+            image4.setImageResource(R.mipmap.s_cy);
 
             tvT5.setText(String.format("感冒指数─%s", data.getFlu().getBrf()));
             tvTxt5.setText(data.getFlu().getTxt());
-            image5.setImageResource(R.mipmap.w100);
+            image5.setImageResource(R.mipmap.s_gm);
 
             tvT6.setText(String.format("运动指数─%s", data.getSport().getBrf()));
             tvTxt6.setText(data.getSport().getTxt());
-            image6.setImageResource(R.mipmap.w100);
+            image6.setImageResource(R.mipmap.s_yd);
 
             tvT7.setText(String.format("旅游指数─%s", data.getTrav().getBrf()));
             tvTxt7.setText(data.getTrav().getTxt());
-            image7.setImageResource(R.mipmap.w100);
+            image7.setImageResource(R.mipmap.s_ly);
 
             tvT8.setText(String.format("紫外线指数─%s", data.getUv().getBrf()));
             tvTxt8.setText(data.getUv().getTxt());
-            image8.setImageResource(R.mipmap.w100);
+            image8.setImageResource(R.mipmap.s_zwx);
         }
     }
 
@@ -451,35 +455,40 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
                 String s = data.get(0).getDate().substring(data.get(0).getDate().length() - 5);
                 mT1.setText(s);
-                mIv1.setImageResource(image());
+                int code1=data.get(0).getCond().getCode();
+                mIv1.setImageResource(image(code1));
                 mTq1.setText(data.get(0).getCond().getTxt());
                 mTf1.setText(data.get(0).getWind().getDir());
                 mTwd1.setText(String.format("%s℃", data.get(0).getTmp()));
 
                 String s2 = data.get(1).getDate().substring(data.get(1).getDate().length() - 5);
                 mT2.setText(s2);
-                mIv2.setImageResource(image());
+                int code2=data.get(1).getCond().getCode();
+                mIv2.setImageResource(image(code2));
                 mTq2.setText(data.get(1).getCond().getTxt());
                 mTf2.setText(data.get(1).getWind().getDir());
                 mTwd2.setText(String.format("%s℃", data.get(1).getTmp()));
 
                 String s3 = data.get(2).getDate().substring(data.get(1).getDate().length() - 5);
                 mT3.setText(s3);
-                mIv3.setImageResource(image());
+                int code3=data.get(2).getCond().getCode();
+                mIv3.setImageResource(image(code3));
                 mTq3.setText(data.get(2).getCond().getTxt());
                 mTf3.setText(data.get(2).getWind().getDir());
                 mTwd3.setText(String.format("%s℃", data.get(2).getTmp()));
 
                 String s4 = data.get(3).getDate().substring(data.get(3).getDate().length() - 5);
                 mT4.setText(s4);
-                mIv4.setImageResource(image());
+                int code4=data.get(3).getCond().getCode();
+                mIv4.setImageResource(image(code4));
                 mTq4.setText(data.get(3).getCond().getTxt());
                 mTf4.setText(data.get(3).getWind().getDir());
                 mTwd4.setText(String.format("%s℃", data.get(3).getTmp()));
 
                 String s5 = data.get(4).getDate().substring(data.get(4).getDate().length() - 5);
                 mT5.setText(s5);
-                mIv5.setImageResource(image());
+                int code5=data.get(4).getCond().getCode();
+                mIv5.setImageResource(image(code5));
                 mTq5.setText(data.get(4).getCond().getTxt());
                 mTf5.setText(data.get(4).getWind().getDir());
                 mTwd5.setText(String.format("%s℃", data.get(4).getTmp()));
@@ -490,8 +499,162 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    private int image() {
-        return R.mipmap.w100;
+    private int image(int code) {
+        if(code==100){
+            return R.mipmap.w100;
+        }
+        if(code==101){
+            return R.mipmap.w101;
+        }
+        if(code==102){
+            return R.mipmap.w102;
+        }
+        if(code==103){
+            return R.mipmap.w103;
+        }
+        if(code==104){
+            return R.mipmap.w104;
+        }
+        if(code==200){
+            return R.mipmap.w200;
+        }
+        if(code==201){
+            return R.mipmap.w201;
+        }
+        if(code==202){
+            return R.mipmap.w202;
+        }
+        if(code==203){
+            return R.mipmap.w203;
+        }
+        if(code==204){
+            return R.mipmap.w204;
+        }
+
+        if(code==205){
+            return R.mipmap.w205;
+        }
+        if(code==206){
+            return R.mipmap.w206;
+        }
+        if(code==207){
+            return R.mipmap.w207;
+        }
+        if(code==208){
+            return R.mipmap.w208;
+        }
+        if(code==209){
+            return R.mipmap.w209;
+        }
+        if(code==210){
+            return R.mipmap.w210;
+        }
+        if(code==211){
+            return R.mipmap.w211;
+        }
+        if(code==212){
+            return R.mipmap.w212;
+        }
+        if(code==213){
+            return R.mipmap.w213;
+        }
+        if(code==300){
+            return R.mipmap.w300;
+        }
+
+        if(code==301){
+            return R.mipmap.w301;
+        }
+        if(code==302){
+            return R.mipmap.w302;
+        }
+        if(code==303){
+            return R.mipmap.w303;
+        }
+        if(code==304){
+            return R.mipmap.w304;
+        }
+        if(code==305){
+            return R.mipmap.w305;
+        }
+        if(code==306){
+            return R.mipmap.w306;
+        }
+        if(code==307){
+            return R.mipmap.w307;
+        }
+        if(code==308){
+            return R.mipmap.w308;
+        }
+        if(code==309){
+            return R.mipmap.w309;
+        }
+        if(code==310){
+            return R.mipmap.w310;
+        }
+
+        if(code==311){
+            return R.mipmap.w311;
+        }
+        if(code==312){
+            return R.mipmap.w312;
+        }
+        if(code==313){
+            return R.mipmap.w313;
+        }
+        if(code==400){
+            return R.mipmap.w400;
+        }
+        if(code==401){
+            return R.mipmap.w401;
+        }
+        if(code==402){
+            return R.mipmap.w402;
+        }
+        if(code==403){
+            return R.mipmap.w403;
+        }
+        if(code==404){
+            return R.mipmap.w404;
+        }
+        if(code==405){
+            return R.mipmap.w405;
+        }
+        if(code==406){
+            return R.mipmap.w406;
+        }
+
+        if(code==407){
+            return R.mipmap.w407;
+        }
+        if(code==500){
+            return R.mipmap.w500;
+        }
+        if(code==501){
+            return R.mipmap.w501;
+        }
+        if(code==502){
+            return R.mipmap.w502;
+        }
+        if(code==503){
+            return R.mipmap.w503;
+        }
+        if(code==504){
+            return R.mipmap.w504;
+        }
+        if(code==507){
+            return R.mipmap.w507;
+        }
+        if(code==508){
+            return R.mipmap.w508;
+        }
+        if(code==900){
+            return R.mipmap.w900;
+        }
+        if(code==901){
+            return R.mipmap.w901;
+        }
+        return R.mipmap.w999;
     }
 }
 

@@ -86,26 +86,26 @@
     </string-array>
 
     <string-array name="wechat_type">
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>ic_launcher</item>
-        <item>"icon_my"</item>
-        <item>"icon_my"</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
-        <item>icon_my</item>
+        <item>wx_tj</item>
+        <item>wx_hot</item>
+        <item>wx_tym</item>
+        <item>wx_dzs</item>
+        <item>wx_yst</item>
+        <item>wx_sfh</item>
+        <item>wx_bgj</item>
+        <item>wx_ashh</item>
+        <item>wx_cj</item>
+        <item>wx_qcm</item>
+        <item>wx_kjk</item>
+        <item>wx_crb</item>
+        <item>wx_lmb</item>
+        <item>wx_dz</item>
+        <item>wx_lxj</item>
+        <item>wx_zcr</item>
+        <item>wx_msj</item>
+        <item>wx_gjt</item>
+        <item>wx_xbz</item>
+        <item>wx_xz</item>
+        <item>wx_ss</item>
     </string-array>
 </resources>

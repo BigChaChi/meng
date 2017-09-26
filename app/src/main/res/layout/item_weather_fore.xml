@@ -37,6 +37,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_fx"
                         android:id="@+id/tv_o1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -55,6 +58,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_sd"
                         android:id="@+id/tv_o3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -73,6 +79,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_wd"
                         android:id="@+id/tv_o5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -99,6 +108,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_kq"
                         android:id="@+id/tv_t1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -117,6 +129,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_yq"
                         android:id="@+id/tv_t3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -135,6 +150,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_zwx"
                         android:id="@+id/tv_t5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -160,6 +178,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_bt"
                         android:id="@+id/tv_s1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -178,6 +199,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_yj"
                         android:id="@+id/tv_s3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -196,6 +220,9 @@
                     android:layout_weight="1">
 
                     <TextView
+                        android:textColor="#BDBDBD"
+                        android:textSize="12sp"
+                        android:drawableLeft="@mipmap/w_js"
                         android:id="@+id/tv_s5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

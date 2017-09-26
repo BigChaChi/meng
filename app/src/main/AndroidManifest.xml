@@ -89,6 +89,11 @@
         <activity
             android:name=".ui.activity.SearchWeatherActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.SearchCookBooksActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

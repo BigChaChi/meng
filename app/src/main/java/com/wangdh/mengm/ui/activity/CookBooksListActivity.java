@@ -1,11 +1,15 @@
 package com.wangdh.mengm.ui.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
@@ -129,6 +133,20 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.searchmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_search) {
+            startActivity(new Intent(this, SearchCookBooksActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

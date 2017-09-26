@@ -38,7 +38,7 @@ public class CookBooksListPresenter extends RxPresenter<CookBooksListContract.Vi
                           try {
                               mView.showCookBooksListData(cookBookslistData);
                           }catch (Exception e){
-                              mView.showError(e.getMessage());
+                              mView.showError("数据加载失败");
                           }
                       }else {
                           mView.showError("数据加载失败");

@@ -1,5 +1,7 @@
 package com.wangdh.mengm.ui.Presenter;
 
+import android.util.Log;
+
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.MeizhiData;
@@ -26,10 +28,10 @@ public class MeizhiPresenter extends RxPresenter<MeizhiContract.View> implements
                 .subscribe(new DefaultSubscriber<MeizhiData>() {
                     @Override
                     public void onNext(MeizhiData data) {
-                        if (!data.isError()){
+                        try {
                             mView.showMeizhiData(data);
-                        }else {
-                            mView.showError("数据加载失败");
+                        }catch (Exception e){
+                            Log.i("toast","Meizhi:"+e.getMessage());
                         }
                     }
 
@@ -40,7 +42,9 @@ public class MeizhiPresenter extends RxPresenter<MeizhiContract.View> implements
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
+                        if(mView!=null){
+                            mView.complete();
+                        }
                     }
                 });
     }

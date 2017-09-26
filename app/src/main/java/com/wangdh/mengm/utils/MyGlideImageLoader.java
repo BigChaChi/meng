@@ -2,6 +2,7 @@ package com.wangdh.mengm.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.DrawableRes;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
@@ -145,7 +146,7 @@ public class MyGlideImageLoader  {
     }
 
     //加载本地图片
-    public static void Image(int url, ImageView imageView) {
+    public static void Image(@DrawableRes int url, ImageView imageView) {
         Glide.with(mContext).load(url).crossFade().into(imageView);
     }
 }

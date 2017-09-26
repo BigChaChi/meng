@@ -59,7 +59,7 @@ public class SearchWeatherActivity extends BaseActivity {
     private SearchHistoryAdapter mHisAdapter;
     private List<String> mHisList = new ArrayList<>();
     private String key;
-    int hotIndex = 0;
+    private int hotIndex = 0;
     private List<String> tagList = new ArrayList<>();
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {

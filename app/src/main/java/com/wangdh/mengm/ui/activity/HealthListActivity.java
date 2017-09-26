@@ -138,6 +138,4 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
             mPresenter.detachView();
         }
     }
-
-
 }

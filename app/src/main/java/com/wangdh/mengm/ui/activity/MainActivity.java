@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,7 +191,7 @@ public class MainActivity extends BaseActivity {
                 }).show();
     };
 
-    @Override   //用户在系统Setting中操作完成后
+    @Override   //权限---用户在系统Setting中操作完成后
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUEST_CODE_SETTING: {
@@ -200,4 +201,24 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    // 退出时间
+    private long currentBackPressedTime = 0;
+    // 退出间隔
+    private static final int BACK_PRESSED_INTERVAL = 2000;
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - currentBackPressedTime > BACK_PRESSED_INTERVAL) {
+                currentBackPressedTime = System.currentTimeMillis();
+                toast(getString(R.string.exit_tips));
+                return true;
+            } else {
+                finish(); // 退出
+            }
+        } else if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
 }

@@ -377,14 +377,14 @@ public class WeatherAllData implements Serializable {
                  * txt : 阴
                  */
 
-                private String code;
+                private int code;
                 private String txt;
 
-                public String getCode() {
+                public int getCode() {
                     return code;
                 }
 
-                public void setCode(String code) {
+                public void setCode(int code) {
                     this.code = code;
                 }
 
@@ -907,24 +907,24 @@ public class WeatherAllData implements Serializable {
                  * txt_n : 多云
                  */
 
-                private String code_d;
-                private String code_n;
+                private int code_d;
+                private int code_n;
                 private String txt_d;
                 private String txt_n;
 
-                public String getCode_d() {
+                public int getCode_d() {
                     return code_d;
                 }
 
-                public void setCode_d(String code_d) {
+                public void setCode_d(int code_d) {
                     this.code_d = code_d;
                 }
 
-                public String getCode_n() {
+                public int getCode_n() {
                     return code_n;
                 }
 
-                public void setCode_n(String code_n) {
+                public void setCode_n(int code_n) {
                     this.code_n = code_n;
                 }
 
@@ -1099,14 +1099,14 @@ public class WeatherAllData implements Serializable {
                  * txt : 多云
                  */
 
-                private String code;
+                private int code;
                 private String txt;
 
-                public String getCode() {
+                public int getCode() {
                     return code;
                 }
 
-                public void setCode(String code) {
+                public void setCode(int code) {
                     this.code = code;
                 }
 
