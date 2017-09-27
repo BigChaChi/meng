@@ -22,9 +22,12 @@ import com.wangdh.mengm.ui.contract.CookBooksListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class CookBooksListActivity extends BaseActivity implements CookBooksListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
@@ -73,7 +76,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         RecyclerViewUtil.init(this, recycler, adapter);
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
         adapter.setOnItemChildClickListener((adapter1, view, position) ->
-             CookBooksDetails.startActivity(this,adapter.getItem(position))
+                CookBooksDetails.startActivity(this, adapter.getItem(position))
         );
     }
 
@@ -88,7 +91,13 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+            new Handler().postDelayed(() -> {
+                try {
+                    mSwipe.setRefreshing(refresh);
+                } catch (NullPointerException e) {
+                    e.getMessage();
+                }
+            }, 1000);//延时消失加载的loading
         }
     }
 
@@ -107,10 +116,10 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
 
     @Override
     public void showCookBooksListData(CookBookslistData data) {
-        if(data.getResult().getResult().getList().size()!=0){
+        if (data.getResult().getResult().getList().size() != 0) {
             itemdata.addAll(data.getResult().getResult().getList());
             adapter.notifyDataSetChanged();
-        }else {
+        } else {
             toast("数据加载失败");
         }
 
@@ -121,7 +130,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    start=start+20;
+                    start = start + 20;
                     mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));
                 } else {
                     //获取更多数据失败
@@ -147,6 +156,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

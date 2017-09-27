@@ -8,15 +8,17 @@ import com.wangdh.mengm.ui.contract.CookBooksListContract;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.inject.Inject;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DefaultSubscriber;
+
+import io.reactivex.Flowable;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 
 public class CookBooksListPresenter extends RxPresenter<CookBooksListContract.View>
-                        implements CookBooksListContract.Presenter<CookBooksListContract.View>{
+        implements CookBooksListContract.Presenter<CookBooksListContract.View> {
     private RetrofitManager api;
+
     @Inject
     public CookBooksListPresenter(RetrofitManager api) {
         this.api = api;
@@ -29,29 +31,64 @@ public class CookBooksListPresenter extends RxPresenter<CookBooksListContract.Vi
         map.put("num", num);
         map.put("start", start);
         map.put("appkey", Constant.jcloudKey);
-        api.cookBookslistDataFlowable(map).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DefaultSubscriber<CookBookslistData>() {
-                    @Override
-                    public void onNext(CookBookslistData cookBookslistData) {
-                      if(cookBookslistData.getCode().equals("10000")&&cookBookslistData!=null){
-                          try {
-                              mView.showCookBooksListData(cookBookslistData);
-                          }catch (Exception e){
-                              mView.showError("数据加载失败");
-                          }
-                      }else {
-                          mView.showError("数据加载失败");
-                      }
+
+        Flowable<CookBookslistData> flowable = api.cookBookslistDataFlowable(map);
+        ResourceSubscriber resourceSubscriber = new ResourceSubscriber<CookBookslistData>() {
+            @Override
+            public void onNext(CookBookslistData cookBookslistData) {
+                if (cookBookslistData.getCode().equals("10000")) {
+                    try {
+                        mView.showCookBooksListData(cookBookslistData);
+                    }catch (NullPointerException e){
+                        e.getMessage();
                     }
-                    @Override
-                    public void onError(Throwable t) {
-                        mView.showError(t.getMessage());
-                    }
-                    @Override
-                    public void onComplete() {
-                        mView.complete();
-                    }
-                });
+
+                } else {
+                    mView.showError("数据加载失败");
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                mView.showError(t.toString());
+                this.dispose();
+            }
+
+            @Override
+            public void onComplete() {
+                if(mView!=null){
+                    mView.complete();
+                }
+                this.dispose();
+            }
+        };
+        addSubscrebe(api.startObservable(flowable, resourceSubscriber));
+
+
+//        api.cookBookslistDataFlowable(map).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DefaultSubscriber<CookBookslistData>() {
+//                    @Override
+//                    public void onNext(CookBookslistData cookBookslistData) {
+//                      if(cookBookslistData.getCode().equals("10000")&&cookBookslistData!=null){
+//                          try {
+//                              mView.showCookBooksListData(cookBookslistData);
+//                          }catch (Exception e){
+//                              e.getMessage();
+//                          }
+//                      }else {
+//                          mView.showError("数据加载失败");
+//                      }
+//                    }
+//                    @Override
+//                    public void onError(Throwable t) {
+//                        mView.showError(t.getMessage());
+//                    }
+//                    @Override
+//                    public void onComplete() {
+//                        mView.complete();
+//                    }
+//                });
+
     }
 }
