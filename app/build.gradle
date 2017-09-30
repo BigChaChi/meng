@@ -67,7 +67,7 @@ dependencies {
     //adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.22'
     //webview
-    compile 'com.just.agentweb:agentweb:1.2.6'
+    compile 'com.just.agentweb:agentweb:2.0.1'
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
     //fab

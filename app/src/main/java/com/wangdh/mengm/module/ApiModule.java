@@ -108,7 +108,7 @@ public class ApiModule {
             }
             Response response = chain.proceed(request);
             if (NetworkUtil.isAvailable(AppUtils.getAppContext())) {
-               /* int maxAge = 0;
+                /* int maxAge = 0;
                 // 有网络时 设置缓存超时时间0个小时*/
                 //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
                 String cacheControl = request.cacheControl().toString();
