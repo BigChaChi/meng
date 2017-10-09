@@ -5,9 +5,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wangdh.mengm.MyApplication;
+
 import org.reactivestreams.Publisher;
+
 import java.lang.reflect.Field;
 import java.util.List;
+
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -60,25 +63,26 @@ public class RxUtils {
                                             return;
                                         Class clazz = t.getClass();
                                         Field[] fields = clazz.getFields();
+                                        // Field[] fields = clazz.getDeclaredFields();
                                         for (Field field : fields) {
                                             String className = field.getType().getSimpleName();
                                             Log.i("toast", "className==" + className);
                                             // 得到属性值
-                                                 if (className.equalsIgnoreCase("List")) {
-                                            try {
-                                                List list = (List) field.get(t);
-                                                Log.i("toast", "list==" + list);
-                                                if (list != null && !list.isEmpty()) {
-                                                    ACache.get(MyApplication.getsInstance())
-                                                            .put(key, new Gson().toJson(t, clazz));
-                                                    Log.i("toast", "cache finish");
-                                                }
-                                            } catch (IllegalAccessException e) {
-                                                e.printStackTrace();
-                                            }
+                                            //   if (className.equalsIgnoreCase("List")) {  //数据类型list
+                                            //   try {
+                                            //   List list = (List) field.get(t);
+                                            //   Log.i("toast", "list==" + list);
+                                            //  if (list != null && !list.isEmpty()) {
+                                            ACache.get(MyApplication.getsInstance())
+                                                    .put(key, new Gson().toJson(t, clazz));
+                                            Log.i("toast", "cache finish");
+                                            //      }
+                                            //   } catch (IllegalAccessException e) {
+                                            //        e.printStackTrace();
+                                            //    }
+                                            //    }
                                         }
                                     }
-                                          }
                                 });
                             }
                         }).observeOn(AndroidSchedulers.mainThread());
