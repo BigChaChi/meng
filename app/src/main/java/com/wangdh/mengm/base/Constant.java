@@ -3,6 +3,9 @@ package com.wangdh.mengm.base;
 import android.graphics.Color;
 import android.os.Environment;
 
+import com.wangdh.mengm.utils.AppUtils;
+import com.wangdh.mengm.utils.FileUtils;
+
 public class Constant {
     public static final String BaseUrl="http://route.showapi.com/";
     public static final String jcloudKey="6d119cf4202fec65d699ebb68d1d6e5f";
@@ -11,6 +14,10 @@ public class Constant {
     public static final String weatherKey="65f888e8c8ef49539f89a249a5e296ed";
     public static final String SAVED_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/meng";
 
+    public static String PATH_DATA = FileUtils.createRootPath(AppUtils.getAppContext()) + "/cache";
+    public static String PATH_TXT = PATH_DATA + "/mengm/";
+    public static String PATH_EPUB = PATH_DATA + "/epub";
+    public static final String SUFFIX_ZIP = ".zip";
     public static final int[] tagColors = new int[]{
             Color.parseColor("#90C5F0"),
             Color.parseColor("#91CED5"),

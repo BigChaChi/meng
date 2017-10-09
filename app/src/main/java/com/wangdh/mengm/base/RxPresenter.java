@@ -23,7 +23,6 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
 
 
     protected void unSubscribe(Disposable disposable){
-
         if(mDisposables!=null) {
             mDisposables.delete(disposable);
         }

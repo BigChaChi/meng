@@ -8,6 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
@@ -42,6 +45,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
     private int start = 0, num = 20;
     @Inject
     NewListPresenter mPresenter;
+    private View errorView;
 
     public static NewListFragment newInstance(String param1, String param2) {
         Bundle args = new Bundle();
@@ -59,6 +63,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -99,6 +104,9 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
             intent.putExtra("wechaturl", url);
             startActivity(intent);
         });
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {setDataRefresh(true);
+                mPresenter.getNewlistData(mParam1, String.valueOf(num), String.valueOf(start));});
         mFab.setOnClickListener(v -> recycler.scrollToPosition(0));
     }
 
@@ -114,6 +122,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
     public void showError(String s) {
         setDataRefresh(false);
         adapter.loadMoreEnd();
+        adapter.setEmptyView(getErrorView());
         toast(s);
     }
 
@@ -152,5 +161,9 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
         } else {
             adapter.loadMoreEnd();
         }
+    }
+
+    public View getErrorView() {
+        return errorView;
     }
 }
