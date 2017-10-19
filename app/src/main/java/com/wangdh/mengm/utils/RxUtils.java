@@ -2,15 +2,11 @@ package com.wangdh.mengm.utils;
 
 import android.text.TextUtils;
 import android.util.Log;
-
 import com.google.gson.Gson;
 import com.wangdh.mengm.MyApplication;
-
 import org.reactivestreams.Publisher;
-
 import java.lang.reflect.Field;
 import java.util.List;
-
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -30,9 +26,9 @@ public class RxUtils {
         return Flowable.create(new FlowableOnSubscribe<String>() {
             @Override
             public void subscribe(FlowableEmitter<String> e) throws Exception {
-                Log.i("toast", "get data from disk: key==" + key);
+               // Log.i("toast", "get data from disk: key==" + key);
                 String json = ACache.get(MyApplication.getsInstance()).getAsString(key);
-                Log.i("toast", "get data from disk finish , json==" + json);
+               // Log.i("toast", "get data from disk finish , json==" + json);
                 if (!TextUtils.isEmpty(json)) {
                     e.onNext(json);
                 }
@@ -57,7 +53,7 @@ public class RxUtils {
                                 Schedulers.io().createWorker().schedule(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.i("toast", "get data from network finish ,start cache...");
+                                      //  Log.i("toast", "get data from network finish ,start cache...");
                                         //通过反射获取List,再判空决定是否缓存
                                         if (t == null)
                                             return;
@@ -66,21 +62,21 @@ public class RxUtils {
                                         // Field[] fields = clazz.getDeclaredFields();
                                         for (Field field : fields) {
                                             String className = field.getType().getSimpleName();
-                                            Log.i("toast", "className==" + className);
-                                            // 得到属性值
-                                            //   if (className.equalsIgnoreCase("List")) {  //数据类型list
-                                            //   try {
-                                            //   List list = (List) field.get(t);
-                                            //   Log.i("toast", "list==" + list);
-                                            //  if (list != null && !list.isEmpty()) {
+                                          //  Log.i("toast", "className==" + className);
+                                             //得到属性值
+                                               if (className.equalsIgnoreCase("List")) {  //数据类型list
+                                               try {
+                                               List list = (List) field.get(t);
+                                               Log.i("toast", "list==" + list);
+                                              if (list != null && !list.isEmpty()) {
                                             ACache.get(MyApplication.getsInstance())
                                                     .put(key, new Gson().toJson(t, clazz));
                                             Log.i("toast", "cache finish");
-                                            //      }
-                                            //   } catch (IllegalAccessException e) {
-                                            //        e.printStackTrace();
-                                            //    }
-                                            //    }
+                                              }
+                                               } catch (IllegalAccessException e) {
+                                                   e.printStackTrace();
+                                               }
+                                               }
                                         }
                                     }
                                 });
@@ -101,10 +97,10 @@ public class RxUtils {
                                 Schedulers.io().createWorker().schedule(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.i("toast", "get data from network finish ,start cache...");
+                                    //    Log.i("toast", "get data from network finish ,start cache...");
                                         ACache.get(MyApplication.getsInstance())
                                                 .put(key, new Gson().toJson(t, t.getClass()));
-                                        Log.i("toast", "cache finish");
+                                  //      Log.i("toast", "cache finish");
                                     }
 
                                 });

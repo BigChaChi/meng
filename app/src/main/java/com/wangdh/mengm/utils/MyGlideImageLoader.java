@@ -33,7 +33,7 @@ public class MyGlideImageLoader  {
     }
 
     private static void loadNormal(String url, ImageView img) {  //placeholder占位符。错误占位符：.error()
-        Glide.with(mContext).load(url).placeholder(R.mipmap.ic_launcher).dontAnimate().//去掉动画
+        Glide.with(mContext).load(url).placeholder(R.mipmap.timg).dontAnimate().//去掉动画
                 diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
     }
     private static void loadCache(String url, ImageView img) {
@@ -63,7 +63,7 @@ public class MyGlideImageLoader  {
                     }
                 };
             }
-        }).load(url).placeholder(R.mipmap.ic_launcher).dontAnimate().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
+        }).load(url).placeholder(R.mipmap.timg).dontAnimate().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(img);
 
     }
 
@@ -94,8 +94,8 @@ public class MyGlideImageLoader  {
                         return false;
                     }
                 })
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
+                .placeholder(R.mipmap.timg)
+                .error(R.mipmap.timg)
                 .into(imageView);
     }
 

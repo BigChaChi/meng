@@ -7,6 +7,7 @@ import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.CookBooksData;
 import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.bean.FunnyPicturesData;
+import com.wangdh.mengm.bean.HeaderLayoutBean;
 import com.wangdh.mengm.bean.HealthitemData;
 import com.wangdh.mengm.bean.HealthitemListData;
 import com.wangdh.mengm.bean.JokeData;
@@ -83,6 +84,10 @@ public class RetrofitManager {
 
     public Flowable<CelebratedDictum> splashRxjava() {
         return service.splashRxjava();
+    }
+
+    public Flowable<HeaderLayoutBean> headerRxjava(){
+        return service.headerRxjava();
     }
 
     public Flowable<NewListData> newListDataFlowable(Map<String, String> params) {

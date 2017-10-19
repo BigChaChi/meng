@@ -5,9 +5,12 @@ import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.CookBooksData;
 import com.wangdh.mengm.ui.contract.CookBooksContract;
+import com.wangdh.mengm.utils.RxUtils;
+import com.wangdh.mengm.utils.StringUtils;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
@@ -21,8 +24,10 @@ public class CookBooksPresenter extends RxPresenter<CookBooksContract.View> impl
 
     @Override
     public void getCookBooksData() {
-        api.cookBooksDataFlowable(Constant.jcloudKey)
-                .subscribeOn(Schedulers.io())
+        String key= StringUtils.creatAcacheKey("Cook_Books");
+        Flowable<CookBooksData> flowable=api.cookBooksDataFlowable(Constant.jcloudKey).compose(RxUtils.<CookBooksData>rxCacheBeanHelper(key));
+
+        Flowable.concat(RxUtils.rxCreateDiskFlowable(key,CookBooksData.class),flowable)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultSubscriber<CookBooksData>() {
                     @Override

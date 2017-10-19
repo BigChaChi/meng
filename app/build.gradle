@@ -24,8 +24,8 @@ android {
     }
 }
 
-repositories {  //  glide
-    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+repositories {
+    mavenCentral() // glide
 }
 
 
@@ -75,4 +75,5 @@ dependencies {
     //视频
     compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
     compile project(':EasyAdapterLibrary')
+
 }

@@ -3,22 +3,16 @@ package com.wangdh.mengm.ui.Presenter;
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.base.RxPresenter;
-import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.bean.NewListData;
 import com.wangdh.mengm.ui.contract.NewListContract;
 import com.wangdh.mengm.utils.RxUtils;
 import com.wangdh.mengm.utils.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.inject.Inject;
-
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
-import io.reactivex.subscribers.ResourceSubscriber;
 
 public class NewListPresenter extends RxPresenter<NewListContract.View> implements NewListContract.Presenter<NewListContract.View> {
     private RetrofitManager api;
@@ -36,9 +30,8 @@ public class NewListPresenter extends RxPresenter<NewListContract.View> implemen
         map.put("start", start);
         map.put("appkey", Constant.jcloudKey);
 
-
         String key = StringUtils.creatAcacheKey("new-review-list", type, num, start);
-        Flowable<NewListData> flowable = api.newListDataFlowable(map).compose(RxUtils.<NewListData>rxCacheListHelper(key));
+        Flowable<NewListData> flowable = api.newListDataFlowable(map).compose(RxUtils.<NewListData>rxCacheBeanHelper(key));
         Flowable.concat(RxUtils.rxCreateDiskFlowable(key, NewListData.class), flowable)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultSubscriber<NewListData>() {

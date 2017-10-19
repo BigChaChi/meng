@@ -6,6 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
@@ -38,12 +42,15 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.fab)
     FloatingActionButton mFab;
+    @BindView(R.id.back)
+    ImageView iv;
     private String type;
     @Inject
     WechatListPresenter mPresenter;
     private List<WeChatListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean> itemdata = new ArrayList<>();
     private WechatListAdapter adapter;
     private int i = 1;
+    private View errorView;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -79,6 +86,18 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
         });
 
         mFab.setOnClickListener(v -> recycler.scrollToPosition(0));
+        iv.setOnClickListener(v -> {
+            if ((mPresenter != null)) {
+                mPresenter.detachView();
+            }
+            finish();
+        });
+
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {
+            mSwipe.setRefreshing(true);
+            mPresenter.getWechatlistDta(type, i);
+        });
     }
 
     @Override
@@ -94,6 +113,7 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
         hideDialog();
         mSwipe.setRefreshing(false);
         adapter.loadMoreEnd();
+        adapter.setEmptyView(getErrorView());
         toast(s);
     }
 
@@ -111,9 +131,14 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
 
     }
 
+    public View getErrorView() {
+        return errorView;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        adapter.loadMoreEnd();
         if ((mPresenter != null)) {
             mPresenter.detachView();
         }
@@ -124,7 +149,7 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    i=i+1;
+                    i = i + 1;
                     mPresenter.getWechatlistDta(type, i);
                 } else {
                     //获取更多数据失败

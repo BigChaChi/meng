@@ -4,6 +4,7 @@ import com.wangdh.mengm.bean.CelebratedDictum;
 import com.wangdh.mengm.bean.CookBooksData;
 import com.wangdh.mengm.bean.CookBookslistData;
 import com.wangdh.mengm.bean.FunnyPicturesData;
+import com.wangdh.mengm.bean.HeaderLayoutBean;
 import com.wangdh.mengm.bean.HealthitemData;
 import com.wangdh.mengm.bean.HealthitemListData;
 import com.wangdh.mengm.bean.JokeData;
@@ -28,6 +29,9 @@ public interface ApiService {
 
     @GET("http://api.avatardata.cn/MingRenMingYan/Random?key=7bc718abfae24a7294810102ac7538c3")
     Flowable<CelebratedDictum> splashRxjava();
+
+    @GET(" http://api.avatardata.cn/TangShiSongCi/Random?key=303e8cc3ed154d68adf2f80f7587bf14")
+    Flowable<HeaderLayoutBean> headerRxjava();
 
     @GET("https://way.jd.com/jisuapi/get")
     Flowable<NewListData> newListDataRxjava(@QueryMap Map<String, String> params);

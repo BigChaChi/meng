@@ -25,8 +25,10 @@ public class StringUtils {
      */
     public static String formatContent(String str) {
         str = str.replaceAll("[ ]*", "");//替换来自服务器上的，特殊空格
-        str = str.replaceAll("[ ]*", "");//
+        str = str.replaceAll("[ ]*", "");
         str = str.replace("\n\n", "\n");
+        str = str.replaceAll("<br/>","");
+        str = str.replaceAll("<br>","");
         str = str.replace("\n", "\n" + getTwoSpaces());
         str = getTwoSpaces() + str;
 //        str = convertToSBC(str);

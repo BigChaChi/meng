@@ -7,18 +7,21 @@
             android:id="@+id/weatheritem"
             android:checkable="true"
             android:title="@string/tianq"
+            android:icon="@mipmap/tqyb"
             android.support.design:itemTextColor="@color/nev_item"
            />
         <item
             android:id="@+id/pictureitem"
             android:checkable="true"
             android:title="@string/meizi"
+            android:icon="@mipmap/mtu"
             android.support.design:itemTextColor="@color/nev_item"/>
 
         <item
             android:id="@+id/videoiitem"
             android:checkable="true"
             android:title="@string/sping"
+            android:icon="@mipmap/sping"
             android.support.design:itemTextColor="@color/nev_item" />
     </group>
 

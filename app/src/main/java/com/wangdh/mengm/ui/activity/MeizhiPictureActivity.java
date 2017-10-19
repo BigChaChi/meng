@@ -7,8 +7,10 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
@@ -41,7 +43,8 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     MeizhiPresenter mPresenter;
     private MeizhiAdapter adapter;
     private int page = 1;
-    private Runnable runnable;
+    private View errorView;
+
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerActivityComponent.builder()
@@ -80,7 +83,11 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
             );
             ActivityCompat.startActivity(getContext(), intent, optionsCompat.toBundle());
         });
-
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {
+            mSwipe.setRefreshing(true);
+            mPresenter.getMeiZhiData("福利", page);
+        });
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
     }
 
@@ -97,6 +104,7 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         toast(s);
         mSwipe.setRefreshing(false);
         adapter.loadMoreEnd();
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -110,7 +118,9 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
         adapter.notifyDataSetChanged();
         adapter.loadMoreComplete();
     }
-
+    public View getErrorView() {
+        return errorView;
+    }
 //    private void setDataRefresh(boolean refresh) {
 //        if (refresh) {
 //            mSwipe.setRefreshing(refresh);

@@ -7,6 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
@@ -19,9 +23,12 @@ import com.wangdh.mengm.ui.contract.VideoListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 
 
@@ -40,6 +47,7 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
     VideoListPresenter mPresenter;
     private VideoAdapter adapter;
     private int page = 1;
+    private View errorView;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -65,15 +73,20 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         });
         setDataRefresh(true);
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, getResources().getString(R.string.sping), this);
-        adapter=new VideoAdapter(mData);
+        adapter = new VideoAdapter(mData);
         adapter.setOnLoadMoreListener(this, recycler);
-        RecyclerViewUtil.initNoDecoration(this,recycler,adapter);
+        RecyclerViewUtil.initNoDecoration(this, recycler, adapter);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            String url=mData.get(position).getVideo_uri();
-            Intent intent=new Intent(this,VideoActivity.class);
-            intent.putExtra("videourl",url);
+            String url = mData.get(position).getVideo_uri();
+            Intent intent = new Intent(this, VideoActivity.class);
+            intent.putExtra("videourl", url);
             startActivity(intent);
-            overridePendingTransition(R.anim.fade_entry,R.anim.hold);
+            overridePendingTransition(R.anim.fade_entry, R.anim.hold);
+        });
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {
+            mSwipe.setRefreshing(true);
+            mPresenter.getVideolistData(String.valueOf(page));
         });
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
     }
@@ -90,6 +103,7 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         setDataRefresh(false);
         adapter.loadMoreEnd();
         toast(s);
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -109,7 +123,7 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    page=page+1;
+                    page = page + 1;
                     mPresenter.getVideolistData(String.valueOf(page));
                 } else {
                     //获取更多数据失败
@@ -128,6 +142,10 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         } else {
             new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
         }
+    }
+
+    public View getErrorView() {
+        return errorView;
     }
 
     @Override

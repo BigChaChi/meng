@@ -56,7 +56,6 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
     @Inject
     WeChatFragmentPresenter mPresenter;
     private View headerView, footerView;
-
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerFragmentComponent.builder()
@@ -175,7 +174,6 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
         footerView = LayoutInflater.from(getContext()).inflate(R.layout.wechatheaderview, (ViewGroup) recyclerWechat.getParent(), false);
         return footerView;
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

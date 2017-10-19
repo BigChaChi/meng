@@ -74,6 +74,7 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
     @Override
     protected void initData() {
         StateBarTranslucentUtils.setStateBarColor(this);
+        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, city, this);
         EventBus.getDefault().register(this);
         mPresenter.attachView(this);
         mPresenter.getWeatherData(city);

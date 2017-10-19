@@ -2,20 +2,25 @@ package com.wangdh.mengm.ui.activity;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.bean.CelebratedDictum;
+import com.wangdh.mengm.bean.HeaderLayoutBean;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerActivityComponent;
 import com.wangdh.mengm.ui.Presenter.SplashPresenter;
 import com.wangdh.mengm.ui.contract.SplashContract;
+import com.wangdh.mengm.utils.NetworkUtil;
+import com.wangdh.mengm.utils.StorageData;
+import com.wangdh.mengm.utils.StringUtils;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * wdh 启动页
@@ -24,7 +29,7 @@ import butterknife.OnClick;
 
 public class SplashActivity extends BaseActivity implements SplashContract.View {
     @BindView(R.id.imageView)
-    ImageView imageView;
+    CircleImageView imageView;
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.name)
@@ -38,6 +43,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
     private CountDownTimer time;
     @Inject
     SplashPresenter mPresenter;
+    private Intent intent;
+    private boolean b = false;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -54,15 +61,22 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     protected void initView() {
+        if(!NetworkUtil.isConnected(this)){
+            toast("当前网络未链接!");
+        }
         time = new CountDownTimer(5000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tvtime.setText(millisUntilFinished / 1000 + "");
+                tvtime.setText(String.valueOf(millisUntilFinished / 1000));
             }
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                if (b) {
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                }
                 finish();
             }
         };
@@ -71,8 +85,10 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     protected void initData() {
+        StorageData.setHeadImage(imageView, "", getContext());  //头像
         mPresenter.attachView(this);
         mPresenter.getSplashDta();
+        mPresenter.getHeaderData();
     }
 
     @OnClick(R.id.frame_skip)
@@ -80,7 +96,12 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         if (time != null) {
             time.cancel();
         }
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
+        if (b) {
+            startActivity(intent);
+        } else {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
         finish();
     }
 
@@ -90,12 +111,25 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void complete() {
+        b = true;
     }
 
     @Override
     public void showSplashData(CelebratedDictum dictum) {
         textView.setText(dictum.getResult().getFamous_saying());
-        name.setText("─ "+dictum.getResult().getFamous_name());
+        name.setText(String.format("─%s", dictum.getResult().getFamous_name()));
+    }
+
+    @Override
+    public void showHeaderData(HeaderLayoutBean headerLayoutBean) {
+        String tit ,n ,txt;
+        tit = headerLayoutBean.getResult().getBiaoti();
+        n = headerLayoutBean.getResult().getZuozhe();
+        txt = StringUtils.formatContent(headerLayoutBean.getResult().getNeirong());
+        intent = new Intent(SplashActivity.this, MainActivity.class);
+        intent.putExtra("tit", tit);
+        intent.putExtra("n", n);
+        intent.putExtra("txt", txt);
     }
 
     @Override

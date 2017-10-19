@@ -6,6 +6,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
@@ -41,6 +44,7 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
     JokeActivityPresenter mPresenter;
     private JokeAdapter adapter;
     private int page = 1;
+    private View errorView;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -70,6 +74,12 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         adapter.setOnLoadMoreListener(this, recycler);
         RecyclerViewUtil.StaggeredGridinit(recycler, adapter);
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
+
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {
+            mSwipe.setRefreshing(true);
+            mPresenter.getJokedata(page);
+        });
     }
 
     @Override
@@ -84,6 +94,7 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
         setDataRefresh(false);
         adapter.loadMoreEnd();
         toast(s);
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -112,7 +123,9 @@ public class JokeActivity extends BaseActivity implements JokeActivityContract.V
             }, 800);//延时消失加载的loading
         }
     }
-
+    public View getErrorView() {
+        return errorView;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

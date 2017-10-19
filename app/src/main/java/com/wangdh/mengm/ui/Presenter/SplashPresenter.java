@@ -1,15 +1,18 @@
 package com.wangdh.mengm.ui.Presenter;
 
+import android.util.Log;
+
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.CelebratedDictum;
+import com.wangdh.mengm.bean.HeaderLayoutBean;
 import com.wangdh.mengm.ui.contract.SplashContract;
-
 import javax.inject.Inject;
-
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DefaultSubscriber;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 public class SplashPresenter extends RxPresenter<SplashContract.View> implements SplashContract.Presenter<SplashContract.View> {
     private RetrofitManager api;
@@ -39,11 +42,36 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
                     }
                 });
     }
 
+    @Override
+    public void getHeaderData() {
+        Flowable<HeaderLayoutBean> flowable = api.headerRxjava();
+        ResourceSubscriber resourceSubscriber = new ResourceSubscriber<HeaderLayoutBean>() {
+
+            @Override
+            public void onNext(HeaderLayoutBean headerLayoutBean) {
+                if (headerLayoutBean.getError_code() == 0) {
+                    mView.showHeaderData(headerLayoutBean);
+                } else {
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.i("toast","head:"+t.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                mView.complete();
+
+            }
+        };
+        addSubscrebe(api.startObservable(flowable, resourceSubscriber));
+    }
 
     //                        if (t instanceof HttpException) {
 //                            HttpException httpException = (HttpException) t;

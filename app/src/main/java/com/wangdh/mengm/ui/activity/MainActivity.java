@@ -8,8 +8,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.flyco.tablayout.CommonTabLayout;
@@ -23,15 +25,15 @@ import com.wangdh.mengm.ui.fragment.LiveFragment;
 import com.wangdh.mengm.ui.fragment.MyFragment;
 import com.wangdh.mengm.ui.fragment.NewFragment;
 import com.wangdh.mengm.ui.fragment.WeChatFragment;
+import com.wangdh.mengm.utils.StorageData;
 import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.RationaleListener;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity {
     private static final int REQUEST_CODE_PERMISSION = 100;
@@ -44,6 +46,9 @@ public class MainActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.commontab)
     CommonTabLayout mainTab;
+    private LinearLayout headerLayout;
+    private CircleImageView mIv;
+    private TextView mTv1,mTv2,mTv3;
     private ArrayList<Fragment> mFragments ;
     private int[] mIconUnselectIds = {
             R.mipmap.icon_news_un, R.mipmap.icon_wechat_un,
@@ -130,6 +135,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         initPermission();
+        String n=getIntent().getStringExtra("n");
+        String tit=getIntent().getStringExtra("tit");
+        String txt=getIntent().getStringExtra("txt");
+        headerLayout = (LinearLayout) navView.inflateHeaderView(R.layout.nav_header_main);
+        mIv= (CircleImageView) headerLayout.findViewById(R.id.c_iv);
+        mTv1= (TextView) headerLayout.findViewById(R.id.tv_title);
+        mTv2= (TextView) headerLayout.findViewById(R.id.tv_name);
+        mTv3= (TextView) headerLayout.findViewById(R.id.tv_txt);
+        StorageData.setHeadImage(mIv,"", getContext());  //头
+        if (n!=null){
+            mTv1.setText(tit);
+            mTv2.setText(n);
+            mTv3.setText(txt);
+        }
     }
 
     private void initPermission() {
@@ -192,6 +211,9 @@ public class MainActivity extends BaseActivity {
 
     @Override   //权限---用户在系统Setting中操作完成后
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment fragment=getSupportFragmentManager().findFragmentByTag("");
+//        fragment.onActivityResult(requestCode,resultCode,data);
         switch (requestCode) {
             case REQUEST_CODE_SETTING: {
                 //    Toast.makeText(LoginActivity.this, "系统设置中操作完成后", Toast.LENGTH_SHORT).show();
