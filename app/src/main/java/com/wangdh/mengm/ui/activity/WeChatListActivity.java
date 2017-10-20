@@ -128,7 +128,6 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
     public void showWechatlistDta(WeChatListData data) {
         itemdata.addAll(data.getShowapi_res_body().getPagebean().getContentlist());
         adapter.notifyDataSetChanged();
-
     }
 
     public View getErrorView() {

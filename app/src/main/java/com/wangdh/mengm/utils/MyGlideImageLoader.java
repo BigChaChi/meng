@@ -149,4 +149,6 @@ public class MyGlideImageLoader  {
     public static void Image(@DrawableRes int url, ImageView imageView) {
         Glide.with(mContext).load(url).crossFade().into(imageView);
     }
+
+
 }

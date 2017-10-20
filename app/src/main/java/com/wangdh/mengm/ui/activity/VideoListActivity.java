@@ -118,6 +118,7 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         adapter.loadMoreComplete();
     }
 
+
     @Override
     public void onLoadMoreRequested() {
         if (mData.size() >= 20) {

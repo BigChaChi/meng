@@ -1,7 +1,7 @@
 package com.wangdh.mengm.ui.adapter;
 
-import android.support.annotation.Nullable;
 
+import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wangdh.mengm.R;
