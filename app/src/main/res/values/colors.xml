@@ -5,6 +5,14 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="ssxinxian1">@color/ssxinjiangexian1</color>
+    <color name="tabGray2">#b1b1b1</color>
+    <color name="loginButton">#8276B0</color>
+    <color name="logintext">#FA94F8</color>
+    <color name="loginyzm">#fb4020</color>
+    <color name="tabGray3">#e6e6e6</color>
+    <color name="tabGray">#929292</color>
+
+    <color name="primary">#31c29c</color>
 
     <color name="ssxinjiangexian1">#ffe8e8e8</color>
     <color name="tabBlue">#157bfd</color>

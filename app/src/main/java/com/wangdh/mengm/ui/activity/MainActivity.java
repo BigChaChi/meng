@@ -151,11 +151,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+
     private void initPermission() {
         // 申请权限。
         AndPermission.with(this)
                 .requestCode(REQUEST_CODE_PERMISSION)
-                .permission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE)
+                .permission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_SMS,Manifest.permission.ACCESS_FINE_LOCATION)
                 .callback(permissionListener)
                 .rationale(rationaleListener)
                 .start();

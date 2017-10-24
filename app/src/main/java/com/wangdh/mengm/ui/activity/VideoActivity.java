@@ -36,7 +36,6 @@ public class VideoActivity extends BaseActivity {
             finish();
             overridePendingTransition(R.anim.fade_exit, R.anim.hold);
         });
-
     }
 
     @Override

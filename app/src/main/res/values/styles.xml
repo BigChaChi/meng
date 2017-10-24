@@ -76,4 +76,8 @@
         <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
     </style>
 
+    <style name="textblue">
+        <item name="android:textColor">@color/tabBlue</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

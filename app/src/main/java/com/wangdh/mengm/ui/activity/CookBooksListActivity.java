@@ -22,12 +22,9 @@ import com.wangdh.mengm.ui.contract.CookBooksListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 
 public class CookBooksListActivity extends BaseActivity implements CookBooksListContract.View, BaseQuickAdapter.RequestLoadMoreListener {

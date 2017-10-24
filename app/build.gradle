@@ -4,6 +4,9 @@ apply plugin: 'me.tatarka.retrolambda'  //java8 lambda表达式
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
+    //兼容Android6.0系统所需，如果这句话报错，可在dependencies标签下使用compile 'cn.bmob.android:http-legacy:1.0'
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.wangdh.mengm"
         minSdkVersion 16
@@ -22,9 +25,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {  //解决第三方库重新打包META-INF的问题
+        exclude  'META-INF/rxjava.properties'
+    }
 }
 
 repositories {
+    flatDir{
+        dirs 'libs' //就是你放aar的目录地址
+    }
     mavenCentral() // glide
 }
 
@@ -74,6 +84,16 @@ dependencies {
     compile 'io.github.yavski:fab-speed-dial:1.0.6'
     //视频
     compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
+    //listview adapter
     compile project(':EasyAdapterLibrary')
-
+    //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
+    //3.5.5：请务必查看下面注释[1]
+    compile('cn.bmob.android:bmob-sdk:3.5.5') {
+        exclude module: 'rxjava', group: 'io.reactivex'
+        exclude group: 'com.squareup.okhttp3'
+        exclude group: 'com.google.code.gson'
+    }
+    //短信验证码
+    compile name: 'SMSSDK-3.0.0', ext: 'aar'
+    compile name: 'SMSSDKGUI-3.0.0', ext: 'aar'
 }

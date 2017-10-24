@@ -2,6 +2,7 @@ package com.wangdh.mengm.ui.activity;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.wangdh.mengm.R;
@@ -15,9 +16,7 @@ import com.wangdh.mengm.ui.contract.SplashContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.StorageData;
 import com.wangdh.mengm.utils.StringUtils;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -111,7 +110,6 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
 
     @Override
     public void complete() {
-        b = true;
     }
 
     @Override
@@ -130,6 +128,8 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
         intent.putExtra("tit", tit);
         intent.putExtra("n", n);
         intent.putExtra("txt", txt);
+        b = true;
+        Log.i("toast",tit+n+txt);
     }
 
     @Override

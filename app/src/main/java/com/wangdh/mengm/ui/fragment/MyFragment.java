@@ -2,37 +2,35 @@ package com.wangdh.mengm.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
-
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.ui.activity.LoginActivity;
+import com.wangdh.mengm.ui.activity.MainActivity;
+import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.utils.StorageData;
 import com.wangdh.mengm.widget.MyLayoutView;
 import com.wangdh.mengm.widget.PinchImageView;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,6 +49,10 @@ public class MyFragment extends BaseFragment {
     Toolbar toolbar;
     @BindView(R.id.myview1)
     MyLayoutView v1;
+    @BindView(R.id.i_switch)
+    Switch mSwitch;
+    @BindView(R.id.login)
+    Button mButton;
     private Dialog dialog;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
@@ -78,6 +80,20 @@ public class MyFragment extends BaseFragment {
     protected void initView() {
         intToolbar();
         imageView.setOnClickListener(v -> Dialog());
+        mButton.setOnClickListener(v ->
+            startActivity(new Intent(getActivity(), LoginActivity.class)));
+
+        if(!SharedPreferencesMgr.getString("password", "").equals("") &&
+                !SharedPreferencesMgr.getString("phone", "").equals("")){
+            mButton.setText("已登陆");
+        }
+        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+
+            }else {
+
+            }
+        });
     }
 
     private void Dialog() {

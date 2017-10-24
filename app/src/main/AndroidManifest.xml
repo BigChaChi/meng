@@ -13,7 +13,12 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -34,6 +39,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
         <activity
@@ -95,6 +101,23 @@
             android:name=".ui.activity.SearchCookBooksActivity"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.PassWordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <meta-data android:name="Mob-AppKey" android:value="21d914aa6b2d8"/>
+        <meta-data android:name="Mob-AppSecret" android:value="de9801147c2f0f7b963b43d9128ffc68"/>
     </application>
 
 </manifest>
