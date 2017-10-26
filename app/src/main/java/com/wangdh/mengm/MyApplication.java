@@ -1,6 +1,7 @@
 package com.wangdh.mengm;
 
 import com.mob.MobApplication;
+import com.tencent.bugly.Bugly;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.component.DaggerAppComponent;
 import com.wangdh.mengm.module.ApiModule;
@@ -23,6 +24,7 @@ public class MyApplication extends MobApplication {
         sInstance = this;
         AppUtils.init(this);
         Bmob.initialize(this, "60394b1cd31efaf89ab9b0f586241788");
+        Bugly.init(this, "47447146b2", false);
         SharedPreferencesMgr.init(this,"mengm");
     }
 

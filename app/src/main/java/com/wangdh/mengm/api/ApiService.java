@@ -27,7 +27,7 @@ import retrofit2.http.QueryMap;
 
 public interface ApiService {
 
-    @GET("http://api.avatardata.cn/MingRenMingYan/Random?key=7bc718abfae24a7294810102ac7538c3")
+    @GET("http://api.avatardata.cn/MingRenMingYan/Random?key=f187a6b02004482f88bf5a974c5d02cf")
     Flowable<CelebratedDictum> splashRxjava();
 
     @GET(" http://api.avatardata.cn/TangShiSongCi/Random?key=303e8cc3ed154d68adf2f80f7587bf14")

@@ -215,7 +215,7 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         hideDialog();
         toast("注册成功");
         SharedPreferencesMgr.setString("name", name);
-        SharedPreferencesMgr.setString("phone", phone);
+        SharedPreferencesMgr.setString("password", password);
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         finish();
     }

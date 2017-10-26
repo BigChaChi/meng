@@ -103,7 +103,11 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
     @Override
     public void showError(String s) {
         hideDialog();
-        mSwipe.setRefreshing(false);
+        if(mSwipe!=null){
+            mSwipe.setRefreshing(false);
+        }else {
+            throw new NullPointerException("swipeRefreshLayout not null");
+        }
         adapter.loadMoreEnd();
         toast(s);
     }
@@ -124,16 +128,14 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+
     }
 
     @Override
     public void onLoadMoreRequested() {
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                if (NetworkUtil.isAvailable(getContext())) {
                     page=page+1;
                     mPresenter.getFunnyPicturesData(mParam, String.valueOf(page++));
                 } else {

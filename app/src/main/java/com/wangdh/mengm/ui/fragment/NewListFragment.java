@@ -113,7 +113,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 800);//延时消失加载的loading
+            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 600);//延时消失加载的loading
         }
     }
 
@@ -140,16 +140,14 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+
     }
 
     @Override
     public void onLoadMoreRequested() {
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                if (NetworkUtil.isAvailable(getContext())) {
                     start=start+20;
                     mPresenter.getNewlistData(mParam1, String.valueOf(num), String.valueOf(start));
                 } else {

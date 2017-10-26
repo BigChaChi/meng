@@ -50,6 +50,7 @@ public class CookBooksActivity extends BaseActivity {
     @Override
     protected void initView() {
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "菜单分类", this);
+        recycler.setBackgroundResource(R.mipmap.meis);
         mSwipe.setColorSchemeResources(R.color.colorPrimaryDark2, R.color.btn_blue, R.color.ywlogin_colorPrimaryDark);//设置进度动画的颜色
         mSwipe.setProgressViewOffset(true, 0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
         mSwipe.setOnRefreshListener(() ->

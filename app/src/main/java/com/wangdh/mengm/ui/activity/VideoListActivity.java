@@ -123,7 +123,7 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
     public void onLoadMoreRequested() {
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                if (NetworkUtil.isAvailable(getContext())) {
                     page = page + 1;
                     mPresenter.getVideolistData(String.valueOf(page));
                 } else {
@@ -141,7 +141,12 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+            try {
+                new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+            }catch (NullPointerException e){
+                e.getMessage();
+            }
+
         }
     }
 
@@ -152,8 +157,8 @@ public class VideoListActivity extends BaseActivity implements VideoListContract
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+//        if (mPresenter != null) {
+//            mPresenter.detachView();
+//        }
     }
 }

@@ -10,9 +10,14 @@ import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.bean.bmob.AccountBean;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.manager.EventManager;
+import com.wangdh.mengm.manager.LoginEvent;
 import com.wangdh.mengm.utils.KeyboardUtils;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.widget.FilterImageView;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
@@ -63,9 +68,9 @@ public class LoginActivity extends BaseActivity {
 
     private void Login() {
         if (!SharedPreferencesMgr.getString("password", "")
-                .equals("") && !SharedPreferencesMgr.getString("phone", "").equals("")) {
+                .equals("") && !SharedPreferencesMgr.getString("name", "").equals("")) {
             password = SharedPreferencesMgr.getString("password", "");
-            phone = SharedPreferencesMgr.getString("phone", "");
+            phone = SharedPreferencesMgr.getString("name", "");
             etPhone.setText(phone);
             etYzm.setText(password);
         }
@@ -93,7 +98,8 @@ public class LoginActivity extends BaseActivity {
                         if (e == null) {
                                 if (list.get(0).getName().equals(phone) && list.get(0).getPassword().equals(password)) {
                                     SharedPreferencesMgr.setString("password", password);
-                                    SharedPreferencesMgr.setString("phone", phone);
+                                    SharedPreferencesMgr.setString("name", phone);
+                                    EventBus.getDefault().post(new LoginEvent());
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     LoginActivity.this.finish();
                                 }

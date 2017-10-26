@@ -36,7 +36,12 @@ public class HealthListPresenter extends RxPresenter<HealthListContract.View> im
                     @Override
                     public void onNext(HealthitemListData data) {
                         if(data.getShowapi_res_code()==0&&data.getShowapi_res_body()!=null){
-                            mView.showHealthListData(data);
+                            try {
+                                mView.showHealthListData(data);
+                            }catch (NullPointerException e){
+                                e.getMessage();
+                            }
+
                         }else {
                             mView.showError("数据加载失败");
                         }
@@ -49,7 +54,11 @@ public class HealthListPresenter extends RxPresenter<HealthListContract.View> im
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
+                        try {
+                            mView.complete();
+                        }catch (NullPointerException e){
+                            e.getMessage();
+                        }
                     }
                 });
     }

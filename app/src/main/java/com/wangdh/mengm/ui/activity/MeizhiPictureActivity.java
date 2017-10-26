@@ -109,7 +109,11 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
 
     @Override
     public void complete() {
-        mSwipe.setRefreshing(false);
+        try {
+            mSwipe.setRefreshing(false);
+        }catch (NullPointerException e){
+            e.getMessage();
+        }
     }
 
     @Override
@@ -149,9 +153,9 @@ public class MeizhiPictureActivity extends BaseActivity implements MeizhiContrac
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+//        if (mPresenter != null) {
+//            mPresenter.detachView();
+//        }
 
     }
 }

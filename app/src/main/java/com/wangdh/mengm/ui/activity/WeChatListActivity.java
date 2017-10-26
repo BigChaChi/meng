@@ -119,7 +119,11 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
 
     @Override
     public void complete() {
-        mSwipe.setRefreshing(false);
+        try {
+            mSwipe.setRefreshing(false);
+        }catch (NullPointerException e){
+            e.getMessage();
+        }
         adapter.loadMoreComplete();
         hideDialog();
     }
@@ -137,17 +141,14 @@ public class WeChatListActivity extends BaseActivity implements WechatListContra
     @Override
     public void onDestroy() {
         super.onDestroy();
-        adapter.loadMoreEnd();
-        if ((mPresenter != null)) {
-            mPresenter.detachView();
-        }
+
     }
 
     @Override
     public void onLoadMoreRequested() {
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                if (NetworkUtil.isAvailable(getContext())) {
                     i = i + 1;
                     mPresenter.getWechatlistDta(type, i);
                 } else {

@@ -3,8 +3,10 @@ package com.wangdh.mengm.ui.fragment;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
 import com.wangdh.mengm.bean.HealthitemData;
@@ -22,15 +24,13 @@ import butterknife.BindView;
 
 
 public class HealthFragment extends BaseFragment implements HealthFragmentContract.View {
-    @BindView(R.id.ken)
-    KenBurnsView imag;
     @BindView(R.id.recycler_health)
     RecyclerView recycler;
     @Inject
     HealthFragmentPresenter mPresenter;
     private HealthFragmentAdapter adapter;
     private List<HealthitemData.ShowapiResBodyBean.ListBean> itemdata = new ArrayList<>();
-
+    private View errorView;
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerFragmentComponent.builder()
@@ -61,12 +61,15 @@ public class HealthFragment extends BaseFragment implements HealthFragmentContra
             intent.putExtra("name",adapter.getItem(position).getName());
             startActivity(intent);
         });
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> mPresenter.getHealthData());
     }
 
     @Override
     public void showError(String s) {
         hideDialog();
         toast(s);
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -76,11 +79,12 @@ public class HealthFragment extends BaseFragment implements HealthFragmentContra
 
     @Override
     public void showHealthData(HealthitemData data) {
-        Log.i("toast",data.getShowapi_res_body().getList().get(2).getName());
         itemdata.addAll(data.getShowapi_res_body().getList());
         adapter.notifyDataSetChanged();
     }
-
+    public View getErrorView() {
+        return errorView;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

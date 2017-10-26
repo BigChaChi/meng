@@ -108,9 +108,13 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
         adapter.setHeaderView(getHeaderView());
         adapter.setFooterView(getFooterView());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            Intent intent = new Intent(getActivity(), WeChatListActivity.class);
-            intent.putExtra("wechattype", Datas.get(position).getType());
-            startActivity(intent);
+            if(Datas.get(position).getType().equals("520")){
+                toast("其实点我并没有用-，-");
+            }else {
+                Intent intent = new Intent(getActivity(), WeChatListActivity.class);
+                intent.putExtra("wechattype", Datas.get(position).getType());
+                startActivity(intent);
+            }
         });
     }
 

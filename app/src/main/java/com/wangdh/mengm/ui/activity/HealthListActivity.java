@@ -7,6 +7,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
@@ -39,6 +43,7 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
     HealthListPresenter mPresenter;
     private HealthListAdapter adapter;
     private List<HealthitemListData.ShowapiResBodyBean.PagebeanBean.ContentlistBean> itemData = new ArrayList<>();
+    private View errorView;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -63,6 +68,7 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
             mPresenter.getHealthListData(id, String.valueOf(page));
         });
         setDataRefresh(true);
+
         ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "健康."+name, this);
         adapter = new HealthListAdapter(itemData);
         adapter.openLoadAnimation();
@@ -75,6 +81,9 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
             intent.putExtra("wechaturl", url);
             startActivity(intent);
         });
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {setDataRefresh(true);
+            mPresenter.getHealthListData(id, String.valueOf(page));});
     }
 
     @Override
@@ -89,6 +98,7 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
     public void showError(String s) {
         toast(s);
         setDataRefresh(false);
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -130,12 +140,11 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
             adapter.loadMoreEnd();
         }
     }
-
+    public View getErrorView() {
+        return errorView;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
     }
 }

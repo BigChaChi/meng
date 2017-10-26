@@ -7,8 +7,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.wangdh.mengm.R;
@@ -42,7 +45,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
     CookBooksListPresenter mPresenter;
     private int start = 0, num = 20;
     private String classid;
-
+    private View errorView;
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
         DaggerActivityComponent.builder()
@@ -75,6 +78,10 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         adapter.setOnItemChildClickListener((adapter1, view, position) ->
                 CookBooksDetails.startActivity(this, adapter.getItem(position))
         );
+
+        errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
+        errorView.setOnClickListener(v -> {setDataRefresh(true);
+            mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));});
     }
 
     @Override
@@ -103,6 +110,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
         toast(s);
         setDataRefresh(false);
         adapter.loadMoreFail();
+        adapter.setEmptyView(getErrorView());
     }
 
     @Override
@@ -126,7 +134,7 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
     public void onLoadMoreRequested() {
         if (itemdata.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(recycler.getContext())) {
+                if (NetworkUtil.isAvailable(getContext())) {
                     start = start + 20;
                     mPresenter.getCookBooksListData(classid, String.valueOf(num), String.valueOf(start));
                 } else {
@@ -138,7 +146,9 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
             adapter.loadMoreEnd();
         }
     }
-
+    public View getErrorView() {
+        return errorView;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.searchmenu, menu);
@@ -157,8 +167,6 @@ public class CookBooksListActivity extends BaseActivity implements CookBooksList
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
+
     }
 }

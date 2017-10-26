@@ -1,5 +1,7 @@
 package com.wangdh.mengm.ui.Presenter;
 
+import android.util.Log;
+
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.HeaderLayoutBean;
@@ -35,7 +37,12 @@ public class HealthFragmentPresenter extends RxPresenter<HealthFragmentContract.
                     @Override
                     public void onNext(HealthitemData healthitemData) {
                         if(healthitemData.getShowapi_res_code()==0){
-                            mView.showHealthData(healthitemData);
+                            try {
+                                mView.showHealthData(healthitemData);
+                             }catch (NullPointerException e){
+                                Log.i("health","NullPointerException");
+                            }
+
                         }else {
                             mView.showError("数据加载失败");
                         }

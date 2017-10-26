@@ -1,5 +1,7 @@
 package com.wangdh.mengm.ui.Presenter;
 
+import android.util.Log;
+
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.base.RxPresenter;
@@ -41,7 +43,12 @@ public class WechatListPresenter extends RxPresenter<WechatListContract.View>imp
                  @Override
                  public void onNext(WeChatListData data) {
                      if(data.getShowapi_res_code()==0) {
-                         mView.showWechatlistDta(data);
+                         try {
+                             mView.showWechatlistDta(data);
+                         }catch (NullPointerException e){
+                             Log.i("wechat","NullPointerException");
+                         }
+
                      }else {
                          mView.showError("数据加载失败");
                      }

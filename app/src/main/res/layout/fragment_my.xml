@@ -10,12 +10,12 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/coll_layout"
+            android:background="@mipmap/mytop"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.v7.widget.Toolbar
-                android:title="我我我"
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize">
@@ -69,10 +69,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.wangdh.mengm.widget.MyLayoutView
-            android:id="@+id/myview1"
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="5dp"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,7 +82,7 @@
          <TextView
              android:layout_marginLeft="10dp"
              android:layout_centerVertical="true"
-             android:text="无图"
+             android:text="无图模式"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content" />
             <Switch
@@ -100,25 +102,135 @@
             android:background="@color/background_gray1"
             android:layout_below="@+id/iv"
             android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cache"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="清除缓存"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:id="@+id/cachesize"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+
+
+
+        <TextView
+            android:id="@+id/gyu"
+            android:layout_marginLeft="10dp"
+            android:text="关于"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout_gyu"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:text="github"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/blue_color"
+                android:text="https://github.com/mhyc666/meng"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/web_tv"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="邮箱"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textIsSelectable="true"
+                android:text="786717306@qq.com"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        </LinearLayout>
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
+            android:layout_width="match_parent"
             android:layout_height="10dp"/>
 
 
+        <TextView
+            android:id="@+id/exit"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="退出登陆"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
         <Button
+            android:layout_marginBottom="350dp"
             android:id="@+id/login"
             android:text="登陆"
             android:textColor="@color/logintext"
-            android:layout_marginRight="40px"
-            android:layout_marginLeft="40px"
-            android:background="@color/loginButton"
-            android:layout_marginTop="20dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:background="@drawable/button_all_round"
+            android:layout_marginTop="130dp"
             android:layout_width="match_parent"
-            android:layout_height="120px" />
-        <TextView
-    android:layout_marginBottom="50dp"
-    android:text="21321342132131"
-    android:layout_width="match_parent"
-    android:layout_height="800dp" />
-
+            android:layout_height="36dp" />
     </LinearLayout>
 
  </android.support.v4.widget.NestedScrollView>

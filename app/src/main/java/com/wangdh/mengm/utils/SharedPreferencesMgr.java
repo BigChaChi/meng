@@ -2,6 +2,7 @@ package com.wangdh.mengm.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -27,7 +28,7 @@ public class SharedPreferencesMgr {
     private SharedPreferencesMgr(Context context, String fileName) {
         this.context = context;
         sPrefs = context.getSharedPreferences(
-                fileName, Context.MODE_WORLD_READABLE);
+                fileName, Context.MODE_PRIVATE);
         editor = this.sPrefs.edit();
     }
 
@@ -64,6 +65,15 @@ public class SharedPreferencesMgr {
         if (sPrefs == null)
             return;
         sPrefs.edit().putString(key, value).commit();
+    }
+    /**
+     * 移除Key对应的value值
+     */
+    public static void remove(Context context,String key){
+
+        SharedPreferences sp = context.getSharedPreferences("mengm",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(key).commit();
     }
 
     public static void clearAll() {

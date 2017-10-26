@@ -51,20 +51,20 @@
         <item>科技咖</item>
         <item>潮人帮</item>
         <item>辣妈帮</item>
-        <item>点赞党</item>
         <item>旅行家</item>
         <item>职场人</item>
         <item>美食家</item>
         <item>古今通</item>
         <item>学霸族</item>
         <item>星座控</item>
+        <item>军事迷</item>
         <item>搜索</item>
     </string-array>
 
     <string-array name="wechat_typeid">
         <item>1</item>
         <item>0</item>
-        <item>19</item>
+        <item>18</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
@@ -81,7 +81,7 @@
         <item>15</item>
         <item>16</item>
         <item>17</item>
-        <item>18</item>
+        <item>19</item>
         <item>520</item>
     </string-array>
 
@@ -99,13 +99,13 @@
         <item>wx_kjk</item>
         <item>wx_crb</item>
         <item>wx_lmb</item>
-        <item>wx_dz</item>
         <item>wx_lxj</item>
         <item>wx_zcr</item>
         <item>wx_msj</item>
         <item>wx_gjt</item>
         <item>wx_xbz</item>
         <item>wx_xz</item>
+        <item>wx_dz</item>
         <item>wx_ss</item>
     </string-array>
 </resources>

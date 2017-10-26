@@ -33,9 +33,12 @@ public class WeatherActivityPresenter extends RxPresenter<WeatherActivityContrac
                 .subscribe(new DefaultSubscriber<WeatherAllData>() {
                     @Override
                     public void onNext(WeatherAllData weatherAllData) {
-                        mView.showWeatherData(weatherAllData);
+                        if (!weatherAllData.getHeWeather5().get(0).getStatus().equals("unknown city")) {
+                            mView.showWeatherData(weatherAllData);
+                        } else {
+                            mView.showError("没有这个城市");
+                        }
                     }
-
                     @Override
                     public void onError(Throwable t) {
                         mView.showError(t.getMessage());

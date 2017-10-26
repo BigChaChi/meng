@@ -102,7 +102,12 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
     @Override
     public void showWeatherData(WeatherAllData data) {
         mData = data;
-        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, mData.getHeWeather5().get(0).getBasic().getCity(), this);
+        try {
+            ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, mData.getHeWeather5().get(0).getBasic().getCity(), this);
+        }catch (NullPointerException e){
+            e.getMessage();
+        }
+
         adapter = new WeatherAdapter(mData);
         RecyclerViewUtil.initNoDecoration(this, mRecyclerView, adapter);
         int code=mData.getHeWeather5().get(0).getNow().getCond().getCode();

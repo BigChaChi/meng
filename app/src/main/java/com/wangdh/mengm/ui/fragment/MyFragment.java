@@ -2,6 +2,7 @@ package com.wangdh.mengm.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,28 +10,42 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
+import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.manager.LoginEvent;
 import com.wangdh.mengm.ui.activity.LoginActivity;
-import com.wangdh.mengm.ui.activity.MainActivity;
+import com.wangdh.mengm.ui.activity.WebViewDetailsActivity;
+import com.wangdh.mengm.utils.ACache;
+import com.wangdh.mengm.utils.MyGlideImageLoader;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.utils.StorageData;
 import com.wangdh.mengm.widget.MyLayoutView;
 import com.wangdh.mengm.widget.PinchImageView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,18 +62,30 @@ public class MyFragment extends BaseFragment {
     CollapsingToolbarLayout collLayout;
     @BindView(R.id.my_toolbar)
     Toolbar toolbar;
-    @BindView(R.id.myview1)
-    MyLayoutView v1;
     @BindView(R.id.i_switch)
     Switch mSwitch;
     @BindView(R.id.login)
     Button mButton;
+    @BindView(R.id.cache)
+    TextView cacheTv;
+    @BindView(R.id.cachesize)
+    TextView cachesize;
+    @BindView(R.id.exit)
+    TextView edxtTv;
+    @BindView(R.id.gyu)
+    TextView gy;
+    @BindView(R.id.web_tv)
+    TextView webTv;
+    @BindView(R.id.layout_gyu)
+    LinearLayout layout;
     private Dialog dialog;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
     // 创建一个以当前时间为名称的文件
-    File tempFile = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
+    private File tempFile = new File(Environment.getExternalStorageDirectory(), getPhotoFileName());
+    private File f = new File(Constant.PATH_DATA, "data");
+    private boolean b = true;
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
@@ -72,8 +99,18 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        v1.initViewData(R.mipmap.ic_launcher, "打呼哈");
-        StorageData.setHeadImage(imageView,StorageData.getString(), getContext());  //头像
+        EventBus.getDefault().register(this);
+        cachesize.setText("文字：" + ACache.getCacheSize(f) + "  图片：" + MyGlideImageLoader.getCacheSize(getContext()));
+        StorageData.setHeadImage(imageView, StorageData.getString(), getContext());  //头像
+        if (!SharedPreferencesMgr.getString("password", "").equals("") &&
+                !SharedPreferencesMgr.getString("name", "").equals("")) {
+            mButton.setText("已登陆");
+            mButton.setBackgroundResource(R.drawable.button_all_round2);
+        }
+
+        if (!SharedPreferencesMgr.getBoolean("image", true)) {
+            mSwitch.setChecked(true);
+        }
     }
 
     @Override
@@ -81,20 +118,72 @@ public class MyFragment extends BaseFragment {
         intToolbar();
         imageView.setOnClickListener(v -> Dialog());
         mButton.setOnClickListener(v ->
-            startActivity(new Intent(getActivity(), LoginActivity.class)));
+                startActivity(new Intent(getActivity(), LoginActivity.class)));
 
-        if(!SharedPreferencesMgr.getString("password", "").equals("") &&
-                !SharedPreferencesMgr.getString("phone", "").equals("")){
-            mButton.setText("已登陆");
-        }
-        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
+        edxtTv.setOnClickListener(v -> {
+            if (!SharedPreferencesMgr.getString("password", "").equals("") &&
+                    !SharedPreferencesMgr.getString("name", "").equals("")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("退出登陆").setIcon(R.mipmap.login_qc)
+                        .setMessage("确定退出登陆")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-            }else {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferencesMgr.remove(getContext(), "name");
+                                SharedPreferencesMgr.remove(getContext(), "password");
+                                toast("您已退出登陆");
+                                mButton.setText("登陆");
+                                mButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.loginButton));
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i("toast", "取消了");
+                    }
+                });
+                builder.create().show();
+            } else {
+                toast("您没有登陆，不需要退出登陆");
             }
         });
-    }
+
+
+        cacheTv.setOnClickListener(v -> {
+            toast("清除缓存...");
+            ACache.deleteDir(f);
+            MyGlideImageLoader.clearImageAllCache(getContext());
+            cachesize.setText("0");
+        });
+
+
+        mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                ACache.deleteDir(f);
+                MyGlideImageLoader.clearImageAllCache(getContext());
+                SharedPreferencesMgr.setBoolean("image", false);
+            } else {
+                SharedPreferencesMgr.setBoolean("image", true);
+            }
+        });
+
+        gy.setOnClickListener(v -> {
+            if (b) {
+                layout.setVisibility(View.VISIBLE);
+                b = false;
+            } else {
+                layout.setVisibility(View.GONE);
+                b=true;
+            }
+        });
+
+        webTv.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(), WebViewDetailsActivity.class);
+            intent.putExtra("wechaturl", "https://github.com/mhyc666/meng");
+            startActivity(intent);
+    });
+}
 
     private void Dialog() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.photo_choose_dialog, null);
@@ -233,8 +322,18 @@ public class MyFragment extends BaseFragment {
     private void intToolbar() {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         // toolbar.setNavigationIcon(R.drawable.ximalogo);
-        toolbar.setTitle("喜马拉雅");
+        toolbar.setTitle("我的");
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LoginText(LoginEvent event) {
+        mButton.setText("已登陆");
+        mButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.tabGray));
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

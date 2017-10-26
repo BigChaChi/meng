@@ -1,13 +1,10 @@
 package com.wangdh.mengm.ui.Presenter;
 
-import android.util.Log;
-
 import com.wangdh.mengm.api.RetrofitManager;
 import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.base.RxPresenter;
 import com.wangdh.mengm.bean.FunnyPicturesData;
 import com.wangdh.mengm.ui.contract.FunnyPicturesFragmentContract;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +35,12 @@ public class FunnyPicturesPresenter extends RxPresenter<FunnyPicturesFragmentCon
                     @Override
                     public void onNext(FunnyPicturesData funnyPicturesData) {
                         if (funnyPicturesData.getShowapi_res_code() == 0) {
-                            mView.showFunnyPicturesData(funnyPicturesData);
+                            try{
+                                mView.showFunnyPicturesData(funnyPicturesData);
+                            }catch (NullPointerException e){
+                                e.getMessage();
+                            }
+
                         } else {
                             mView.showError("数据加载失败");
                         }
@@ -51,7 +53,12 @@ public class FunnyPicturesPresenter extends RxPresenter<FunnyPicturesFragmentCon
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
+
+                        try{
+                            mView.complete();
+                        }catch (NullPointerException e){
+                            e.getMessage();
+                        }
                     }
                 });
     }

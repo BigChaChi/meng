@@ -3,6 +3,7 @@ package com.wangdh.mengm.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +26,7 @@ import com.wangdh.mengm.ui.fragment.LiveFragment;
 import com.wangdh.mengm.ui.fragment.MyFragment;
 import com.wangdh.mengm.ui.fragment.NewFragment;
 import com.wangdh.mengm.ui.fragment.WeChatFragment;
+import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.utils.StorageData;
 import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
@@ -120,7 +122,15 @@ public class MainActivity extends BaseActivity {
                     startActivity(new Intent(this,WeatherActivity.class));
                     break;
                 case R.id.pictureitem:
-                    startActivity(new Intent(this,MeizhiPictureActivity.class));
+                    if(!SharedPreferencesMgr.getBoolean("image",true)){
+                        Snackbar snackbar = Snackbar.make(toolbar, "妹子图片无图模式不能浏览", Snackbar.LENGTH_INDEFINITE);
+                        //设置行为的监听(和对话框的按钮很像)
+                        snackbar.setAction("确定", v -> toast("请关闭无图模式"));
+                        snackbar.show();
+                    }else {
+                        startActivity(new Intent(this,MeizhiPictureActivity.class));
+                    }
+
                     break;
                 case R.id.videoiitem:
                     startActivity(new Intent(this,VideoListActivity.class));
@@ -143,7 +153,7 @@ public class MainActivity extends BaseActivity {
         mTv1= (TextView) headerLayout.findViewById(R.id.tv_title);
         mTv2= (TextView) headerLayout.findViewById(R.id.tv_name);
         mTv3= (TextView) headerLayout.findViewById(R.id.tv_txt);
-        StorageData.setHeadImage(mIv,"", getContext());  //头
+        StorageData.setHeadImage(mIv,"", getContext());  //头像
         if (n!=null){
             mTv1.setText(tit);
             mTv2.setText(n);
