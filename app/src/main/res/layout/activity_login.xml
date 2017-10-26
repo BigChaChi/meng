@@ -33,7 +33,6 @@
         android:layout_marginRight="40px"
         android:layout_marginLeft="40px"
         android:background="@drawable/border"
-        android:layout_below="@+id/toobar"
         android:layout_marginTop="450px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
