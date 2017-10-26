@@ -6,14 +6,16 @@ https://github.com/mhyc666/meng/raw/master/APK/app-release.apk
 
 练习的APP。由于懒的写，控价名称什么的随便取的，部分代码比较乱随便看看。 
 -------
+用了retrofit+RXjava+mvp+dagger,等。用Bmob实现了注册登陆。
+----------
 
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112539.jpg)  
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112535.jpg) 
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112545.jpg)  
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112553.jpg)
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112604.jpg)  
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112610.jpg) 
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112616.jpg)  
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112634.jpg) 
-![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112648.jpg)  
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112539.png)  
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112535.png) 
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112545.png)  
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112553.png)
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112604.png)  
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112610.png) 
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112616.png)  
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112634.png) 
+![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112648.png)  
 
