@@ -1,9 +1,11 @@
-练习 
+meng 
 =
 下载
 ====
 https://github.com/mhyc666/meng/raw/master/APK/app-release.apk
 
+练习的APP。由于懒的写，控价名称随便取，部分代码比较乱  随便看看。 
+-------
 
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112539.jpg)  
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112535.jpg) 
