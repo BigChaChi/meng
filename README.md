@@ -1,7 +1,7 @@
 练习 
 ====  
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112539.jpg)  
-![](<div align=center><img width="150" height="150"src="https://github.com/mhyc666/meng/raw/master/pic/S71026-112535.jpg"/></div>)  
+![] <div align=center><img width="150" height="150"src="https://github.com/mhyc666/meng/raw/master/pic/S71026-112535.jpg"/></div>  
 
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112545.jpg)  
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112553.jpg)
