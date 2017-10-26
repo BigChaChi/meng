@@ -1,6 +1,6 @@
 练习 
 ====  
-
+https://github.com/mhyc666/meng/raw/master/APK/app-release.apk
 
 
 ![](https://github.com/mhyc666/meng/raw/master/pic/S71026-112539.jpg)  
