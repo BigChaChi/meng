@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
 import com.wangdh.mengm.base.Constant;
@@ -35,17 +34,13 @@ import com.wangdh.mengm.utils.ACache;
 import com.wangdh.mengm.utils.MyGlideImageLoader;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.utils.StorageData;
-import com.wangdh.mengm.widget.MyLayoutView;
 import com.wangdh.mengm.widget.PinchImageView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -119,7 +114,9 @@ public class MyFragment extends BaseFragment {
         imageView.setOnClickListener(v -> Dialog());
         mButton.setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), LoginActivity.class)));
-
+         if( !SharedPreferencesMgr.getString("name", "").equals("")){
+             myTv.setText(SharedPreferencesMgr.getString("name", ""));
+         }
         edxtTv.setOnClickListener(v -> {
             if (!SharedPreferencesMgr.getString("password", "").equals("") &&
                     !SharedPreferencesMgr.getString("name", "").equals("")) {

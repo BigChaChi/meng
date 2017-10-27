@@ -43,7 +43,6 @@ public class WebViewDetailsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        StateBarTranslucentUtils.setStateBarColor(this);
         ToolbarUtils.init(toolbar, R.mipmap.ab_back, this);
         String url = getIntent().getStringExtra("wechaturl");
         showDialog();
