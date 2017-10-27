@@ -4,11 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="220dp"
     android:background="@mipmap/splash"
-    android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
     android:paddingTop="15dp"
+    android:fitsSystemWindows="true"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,39 +26,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:layout_marginRight="50dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
     <TextView
+        android:layout_marginTop="3dp"
         android:textIsSelectable="true"
         android:gravity="center"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="15sp"
         android:text="于易水送人一绝"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-        <TextView
+        android:textColor="@color/tt"
+      />
+            <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"-->
+            <TextView
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
             android:layout_below="@+id/tv_title"
             android:textIsSelectable="true"
-            android:textColor="@color/white"
+            android:textColor="@color/tt"
             android:gravity="center"
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:text="骆宾王" />
         <TextView
             android:layout_below="@+id/tv_name"
             android:textIsSelectable="true"
-            android:textColor="@color/white"
+            android:textColor="@color/tt"
             android:gravity="center"
             android:id="@+id/tv_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:text="此地别燕丹,\n  壮士发冲冠。\n昔时人已没,\n   今日水犹寒。" />
         </LinearLayout>
     </ScrollView>

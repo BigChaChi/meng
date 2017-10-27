@@ -73,10 +73,10 @@ public class SplashActivity extends BaseActivity implements SplashContract.View 
             public void onFinish() {
                 if (b) {
                     startActivity(intent);
-                    overridePendingTransition(R.anim.fade_entry, R.anim.hold);
+                    overridePendingTransition(R.anim.slide_right_entry, R.anim.hold);
                 } else {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    overridePendingTransition(R.anim.fade_entry, R.anim.hold);
+                    overridePendingTransition(R.anim.slide_right_entry, R.anim.hold);
                 }
                 finish();
             }

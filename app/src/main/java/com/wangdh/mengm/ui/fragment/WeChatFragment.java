@@ -153,7 +153,7 @@ public class WeChatFragment extends BaseFragment implements WeChatFragmentContra
     public void showImageData(WechatImage data) {
         TextView mtv = (TextView) headerView.findViewById(R.id.tv_bt);
         imagename = data.getImages().get(0).getCopyright();
-        mtv.setText(imagename);
+        mtv.setText("\n\n"+imagename);
         MyGlideImageLoader.displayImage("http://www.bing.com" + data.getImages().get(0).getUrl(), imagWechat);
         imagWechat.setTransitionListener(new KenBurnsView.TransitionListener() {
             @Override

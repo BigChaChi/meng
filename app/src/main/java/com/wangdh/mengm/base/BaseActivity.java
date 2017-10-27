@@ -27,7 +27,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init(savedInstanceState);//用于初始化view之前做一些事情
-        StateBarTranslucentUtils.setStateBarTranslucent(this);
         setContentView(setLayoutResourceID());
         unbinder = ButterKnife.bind(this);
         mContext = this;

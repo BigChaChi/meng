@@ -147,6 +147,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        StateBarTranslucentUtils.setStateBarTranslucent(this);
         initPermission();
         String n=getIntent().getStringExtra("n");
         String tit=getIntent().getStringExtra("tit");
@@ -161,9 +162,9 @@ public class MainActivity extends BaseActivity {
             mTv1.setText(tit);
             mTv2.setText(n);
             mTv3.setText(txt);
+            mTv3.setOnClickListener(v -> toast(txt));
         }
     }
-
 
     private void initPermission() {
         // 申请权限。
