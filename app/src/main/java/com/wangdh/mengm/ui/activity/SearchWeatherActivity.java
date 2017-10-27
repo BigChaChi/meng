@@ -1,9 +1,6 @@
 package com.wangdh.mengm.ui.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.component.AppComponent;
@@ -26,9 +22,7 @@ import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 import com.wangdh.mengm.utils.ToolbarUtils;
 import com.wangdh.mengm.widget.TagColor;
 import com.wangdh.mengm.widget.TagGroup;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

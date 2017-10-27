@@ -12,6 +12,7 @@ import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.ui.fragment.FunnyPicturesFragment;
+import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 import com.wangdh.mengm.utils.ToolbarUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class FunnyPicturesActivity extends BaseActivity implements OnTabSelectLi
     @Override
     protected void initView() {
         ToolbarUtils.initTitle(toolbarFp, R.mipmap.ab_back, "趣图", this);
+        StateBarTranslucentUtils.setStateBarColor(this);
         tab.setOnTabSelectListener(this);
         initFrameLayout();
     }

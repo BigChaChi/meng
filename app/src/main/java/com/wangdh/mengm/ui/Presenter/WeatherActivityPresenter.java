@@ -34,7 +34,12 @@ public class WeatherActivityPresenter extends RxPresenter<WeatherActivityContrac
                     @Override
                     public void onNext(WeatherAllData weatherAllData) {
                         if (!weatherAllData.getHeWeather5().get(0).getStatus().equals("unknown city")) {
-                            mView.showWeatherData(weatherAllData);
+                            try {
+                                mView.showWeatherData(weatherAllData);
+                            }catch (NullPointerException e){
+                                e.getMessage();
+                            }
+
                         } else {
                             mView.showError("没有这个城市");
                         }
@@ -46,7 +51,11 @@ public class WeatherActivityPresenter extends RxPresenter<WeatherActivityContrac
 
                     @Override
                     public void onComplete() {
-                        mView.complete();
+                        try {
+                            mView.complete();
+                        }catch (NullPointerException e){
+                            e.getMessage();
+                        }
                     }
                 });
     }

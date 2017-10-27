@@ -12,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.flyco.tablayout.CommonTabLayout;
@@ -27,6 +29,7 @@ import com.wangdh.mengm.ui.fragment.MyFragment;
 import com.wangdh.mengm.ui.fragment.NewFragment;
 import com.wangdh.mengm.ui.fragment.WeChatFragment;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
+import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 import com.wangdh.mengm.utils.StorageData;
 import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
@@ -48,7 +51,7 @@ public class MainActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.commontab)
     CommonTabLayout mainTab;
-    private LinearLayout headerLayout;
+    private FrameLayout headerLayout;
     private CircleImageView mIv;
     private TextView mTv1,mTv2,mTv3;
     private ArrayList<Fragment> mFragments ;
@@ -148,7 +151,7 @@ public class MainActivity extends BaseActivity {
         String n=getIntent().getStringExtra("n");
         String tit=getIntent().getStringExtra("tit");
         String txt=getIntent().getStringExtra("txt");
-        headerLayout = (LinearLayout) navView.inflateHeaderView(R.layout.nav_header_main);
+        headerLayout = (FrameLayout) navView.inflateHeaderView(R.layout.nav_header_main);
         mIv= (CircleImageView) headerLayout.findViewById(R.id.c_iv);
         mTv1= (TextView) headerLayout.findViewById(R.id.tv_title);
         mTv2= (TextView) headerLayout.findViewById(R.id.tv_name);
