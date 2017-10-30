@@ -2,7 +2,7 @@ meng
 =
 下载
 ----
-https://github.com/mhyc666/meng/raw/master/APK/app-release.apk
+https://github.com/mhyc666/meng/raw/master/APK/mengm.apk
 
 练习的APP。由于懒的写，控价名称什么的随便取的，部分代码比较乱随便看看。 
 -------
