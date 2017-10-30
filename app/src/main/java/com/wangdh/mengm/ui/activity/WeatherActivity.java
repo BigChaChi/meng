@@ -1,5 +1,6 @@
 package com.wangdh.mengm.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -29,10 +31,16 @@ import com.wangdh.mengm.ui.contract.WeatherActivityContract;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 import com.wangdh.mengm.utils.ToolbarUtils;
+import com.yanzhenjie.alertdialog.AlertDialog;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.yanzhenjie.permission.RationaleListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +68,8 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
     public LocationClient mLocationClient = null;
     public MyLocationListener myListener = new MyLocationListener();
     private int code;
+    private static final int REQUEST_CODE_PERMISSION = 100;
+    private static final int REQUEST_CODE_SETTING = 300;
 
     public class MyLocationListener extends BDAbstractLocationListener implements BDLocationListener {
         @Override
@@ -106,6 +116,7 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
 
     @Override
     protected void initData() {
+        initPermission();
         mLocationClient = new LocationClient(getApplicationContext());
         //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);
@@ -125,11 +136,22 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
         mPresenter.attachView(this);
     }
 
+    private void initPermission() {
+        // 申请权限。
+        AndPermission.with(this)
+                .requestCode(REQUEST_CODE_PERMISSION)
+                .permission(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_SMS, Manifest.permission.ACCESS_FINE_LOCATION)
+                .callback(permissionListener)
+                .rationale(rationaleListener)
+                .start();
+    }
+
     private void data() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> s) throws Exception {
-                if (code == 61 || code == 161) {
+                if (code == 61 || code == 161||code==66||code==68) {
                     Log.i("toast", "定位成功");
                 } else {
                     city = "杭州";
@@ -232,11 +254,72 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
         mPresenter.getWeatherData(event.message);
     }
 
+    /**
+     * 回调监听。
+     */
+    private PermissionListener permissionListener = new PermissionListener() {
+        @Override
+        public void onSucceed(int requestCode, List<String> grantPermissions) {
+            switch (requestCode) {
+                case REQUEST_CODE_PERMISSION: {
+                    // Toast.makeText(LoginActivity.this, "获取权限成功", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+        }
+
+        @Override
+        public void onFailed(int requestCode, List<String> deniedPermissions) {
+            switch (requestCode) {
+                case REQUEST_CODE_PERMISSION: {
+                    Toast.makeText(WeatherActivity.this, "获取权限失败", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+            // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+            if (AndPermission.hasAlwaysDeniedPermission(WeatherActivity.this, deniedPermissions)) {
+                // 第一种：用默认的提示语。
+                AndPermission.defaultSettingDialog(WeatherActivity.this, REQUEST_CODE_SETTING).show();
+            }
+        }
+    };
+
+    /**
+     * Rationale支持，这里自定义对话框。
+     */
+    private RationaleListener rationaleListener = (requestCode, rationale) -> {
+
+        AlertDialog.newBuilder(this)
+                .setTitle("友好提醒")
+                .setMessage("你已经拒绝了权限")
+                .setPositiveButton("好，给你", (dialog, which) -> {
+                    dialog.cancel();
+                    rationale.resume();
+                })
+                .setNegativeButton("我拒绝", (dialog, which) -> {
+                    dialog.cancel();
+                    rationale.cancel();
+                }).show();
+    };
+
+    @Override   //权限---用户在系统Setting中操作完成后
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//        Fragment fragment=getSupportFragmentManager().findFragmentByTag("");
+//        fragment.onActivityResult(requestCode,resultCode,data);
+        switch (requestCode) {
+            case REQUEST_CODE_SETTING: {
+                //    Toast.makeText(LoginActivity.this, "系统设置中操作完成后", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if(mPresenter!=null){
+        if (mPresenter != null) {
             mPresenter.detachView();
         }
     }

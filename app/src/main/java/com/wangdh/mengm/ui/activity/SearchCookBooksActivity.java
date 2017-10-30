@@ -98,7 +98,6 @@ public class SearchCookBooksActivity extends BaseActivity implements SearchCoolB
     @Override
     protected void initData() {
         mPresenter.attachView(this);
-        StateBarTranslucentUtils.setStateBarColor(this);
         mHisAdapter = new SearchHistoryAdapter(this, mHisList);
         lvSearchHistory.setAdapter(mHisAdapter);
         lvSearchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -73,7 +73,6 @@ public class SearchWeatherActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        StateBarTranslucentUtils.setStateBarColor(this);
         mHisAdapter = new SearchHistoryAdapter(this, mHisList);
         lvSearchHistory.setAdapter(mHisAdapter);
         lvSearchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
