@@ -228,11 +228,12 @@ public class MainActivity extends BaseActivity {
     @Override   //权限---用户在系统Setting中操作完成后
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        Fragment fragment=getSupportFragmentManager().findFragmentByTag("");
-//        fragment.onActivityResult(requestCode,resultCode,data);
+             // Fragment fragment=getSupportFragmentManager().findFragmentByTag("");
+             // fragment.onActivityResult(requestCode,resultCode,data);
         switch (requestCode) {
             case REQUEST_CODE_SETTING: {
                 //    Toast.makeText(LoginActivity.this, "系统设置中操作完成后", Toast.LENGTH_SHORT).show();
+                // System.out.println("");
                 break;
             }
         }
