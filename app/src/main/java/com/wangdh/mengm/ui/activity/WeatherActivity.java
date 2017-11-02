@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -86,6 +85,7 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
             String district = location.getDistrict();    //获取区县
             String street = location.getStreet();    //获取街道信息
             code = location.getLocType();
+            Log.i("toast", "code:" + code);
             data();
         }
     }
@@ -151,10 +151,13 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
         Observable.create(new ObservableOnSubscribe<Integer>() {
             @Override
             public void subscribe(ObservableEmitter<Integer> s) throws Exception {
-                if (code == 61 || code == 161||code==66||code==68) {
+                Log.i("toast", " Observable");
+                if (code == 61 || code == 161 || code == 66 || code == 68) {
                     Log.i("toast", "定位成功");
+                    mLocationClient.stop();
                 } else {
                     city = "杭州";
+                    Log.i("toast", "定位失败");
                     toast("定位获取城市失败");
                 }
                 s.onNext(1);
