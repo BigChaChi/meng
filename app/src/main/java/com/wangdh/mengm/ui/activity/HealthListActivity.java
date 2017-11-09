@@ -23,9 +23,12 @@ import com.wangdh.mengm.ui.contract.HealthListContract;
 import com.wangdh.mengm.utils.NetworkUtil;
 import com.wangdh.mengm.utils.RecyclerViewUtil;
 import com.wangdh.mengm.utils.ToolbarUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.BindView;
 
 public class HealthListActivity extends BaseActivity implements HealthListContract.View, BaseQuickAdapter.RequestLoadMoreListener {
@@ -37,7 +40,7 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    private String id,name;
+    private String id, name;
     private int page = 1;
     @Inject
     HealthListPresenter mPresenter;
@@ -69,27 +72,29 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
         });
         setDataRefresh(true);
 
-        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "健康."+name, this);
+        ToolbarUtils.initTitle(toolbar, R.mipmap.ab_back, "健康." + name, this);
         adapter = new HealthListAdapter(itemData);
         adapter.openLoadAnimation();
         adapter.setOnLoadMoreListener(this, recycler);
         RecyclerViewUtil.init(this, recycler, adapter);
         fab.setOnClickListener(v -> recycler.scrollToPosition(0));
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            String url=adapter.getItem(position).getWapurl();
-            Intent intent=new Intent(this,WebViewDetailsActivity.class);
+            String url = adapter.getItem(position).getWapurl();
+            Intent intent = new Intent(this, WebViewDetailsActivity.class);
             intent.putExtra("wechaturl", url);
             startActivity(intent);
         });
         errorView = LayoutInflater.from(getContext()).inflate(R.layout.error_view, (ViewGroup) recycler.getParent(), false);
-        errorView.setOnClickListener(v -> {setDataRefresh(true);
-            mPresenter.getHealthListData(id, String.valueOf(page));});
+        errorView.setOnClickListener(v -> {
+            setDataRefresh(true);
+            mPresenter.getHealthListData(id, String.valueOf(page));
+        });
     }
 
     @Override
     protected void initData() {
         id = getIntent().getStringExtra("tid");
-        name=getIntent().getStringExtra("name");
+        name = getIntent().getStringExtra("name");
         mPresenter.attachView(this);
         mPresenter.getHealthListData(id, String.valueOf(page));
     }
@@ -118,10 +123,17 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
     }
 
     private void setDataRefresh(boolean refresh) {
+
         if (refresh) {
             mSwipe.setRefreshing(refresh);
         } else {
-            new Handler().postDelayed(() -> mSwipe.setRefreshing(refresh), 1000);//延时消失加载的loading
+                new Handler().postDelayed(() -> {
+                    try {
+                        mSwipe.setRefreshing(refresh);
+                    } catch (NullPointerException e) {
+                        e.getMessage();
+                    }
+                }, 800); //延时消失加载的loading
         }
     }
 
@@ -130,7 +142,7 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
         if (itemData.size() >= 20) {
             recycler.postDelayed(() -> {
                 if (NetworkUtil.isAvailable(recycler.getContext())) {
-                    page=page+1;
+                    page = page + 1;
                     mPresenter.getHealthListData(id, String.valueOf(page));
                 } else {
                     adapter.loadMoreFail();
@@ -140,9 +152,11 @@ public class HealthListActivity extends BaseActivity implements HealthListContra
             adapter.loadMoreEnd();
         }
     }
+
     public View getErrorView() {
         return errorView;
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

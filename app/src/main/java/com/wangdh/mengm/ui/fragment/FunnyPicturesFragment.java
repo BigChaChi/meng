@@ -135,7 +135,7 @@ public class FunnyPicturesFragment extends BaseFragment implements FunnyPictures
     public void onLoadMoreRequested() {
         if (mData.size() >= 20) {
             recycler.postDelayed(() -> {
-                if (NetworkUtil.isAvailable(getContext())) {
+                if (page>=1) {
                     page=page+1;
                     mPresenter.getFunnyPicturesData(mParam, String.valueOf(page++));
                 } else {

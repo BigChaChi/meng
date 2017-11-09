@@ -122,7 +122,7 @@ public class NewListFragment extends BaseFragment implements NewListContract.Vie
         setDataRefresh(false);
         adapter.loadMoreEnd();
         adapter.setEmptyView(getErrorView());
-        toast(s);
+       // toast(s);
     }
 
     @Override

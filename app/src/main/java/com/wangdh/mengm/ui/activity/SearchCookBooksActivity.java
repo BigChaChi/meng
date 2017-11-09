@@ -137,10 +137,11 @@ public class SearchCookBooksActivity extends BaseActivity implements SearchCoolB
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                showDialog();
+                toast("搜索中，请稍等");
                 key = query;
                 mPresenter.getSearchResultList(query);
                 saveSearchHistory(query);
-
                 return false;
             }
 
@@ -171,11 +172,12 @@ public class SearchCookBooksActivity extends BaseActivity implements SearchCoolB
     @Override
     public void showError(String s) {
         toast(s);
+        hideDialog();
     }
 
     @Override
     public void complete() {
-
+         hideDialog();
     }
 
     @Override
