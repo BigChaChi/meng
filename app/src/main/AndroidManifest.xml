@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wangdh.mengm">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -45,7 +46,8 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.activity.WeChatListActivity"
@@ -115,6 +117,39 @@
         <activity android:name=".ui.activity.PassWordActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 聊天页面 -->
+        <activity
+            android:name=".ui.activity.ChatActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateUnchanged|adjustPan" />
+
+        <!-- 好友 -->
+        <activity
+            android:name=".ui.activity.ContactListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
+
+        <!-- 添加好友 -->
+        <activity
+            android:name=".ui.activity.AddContactActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateUnchanged|adjustPan" />
+
+        <activity android:name=".ui.activity.NewFriendsMsgActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateUnchanged|adjustPan"/>
+
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
@@ -137,7 +172,9 @@
         </provider>
         <!--bugly-->
 
+        <!-- 百度地图所需的service -->
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
+
 
         <meta-data android:name="Mob-AppKey" android:value="21d914aa6b2d8"/>
         <meta-data android:name="Mob-AppSecret" android:value="de9801147c2f0f7b963b43d9128ffc68"/>
@@ -145,6 +182,64 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Fu1Cdrz9tpft0xqAZ7IzpWG9FZ8k1uMU" >
         </meta-data>
+
+
+
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="mh666yc#mengm-mhyc666" />
+        <!-- 声明sdk所需的service -->
+        <service
+            android:name="com.hyphenate.chat.EMChatService"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+        <service
+            android:name="com.hyphenate.chat.EMJobService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- 声明sdk所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+
+
+        <!-- mi push -->
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="ExportedService" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+
+        <receiver
+            android:name="com.hyphenate.chat.EMMipushReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <!-- mi push end -->
+
     </application>
 
 </manifest>

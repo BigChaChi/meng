@@ -23,11 +23,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.hyphenate.chat.EMClient;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseFragment;
 import com.wangdh.mengm.base.Constant;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.manager.LoginEvent;
+import com.wangdh.mengm.ui.activity.ContactListActivity;
 import com.wangdh.mengm.ui.activity.LoginActivity;
 import com.wangdh.mengm.ui.activity.WebViewDetailsActivity;
 import com.wangdh.mengm.utils.ACache;
@@ -35,12 +38,15 @@ import com.wangdh.mengm.utils.MyGlideImageLoader;
 import com.wangdh.mengm.utils.SharedPreferencesMgr;
 import com.wangdh.mengm.utils.StorageData;
 import com.wangdh.mengm.widget.PinchImageView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -73,6 +79,8 @@ public class MyFragment extends BaseFragment {
     TextView webTv;
     @BindView(R.id.layout_gyu)
     LinearLayout layout;
+    @BindView(R.id.friend_tv)
+    TextView mTv;
     private Dialog dialog;
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
@@ -95,6 +103,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initData() {
         EventBus.getDefault().register(this);
+        mTv.setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactListActivity.class)));
         cachesize.setText("文字：" + ACache.getCacheSize(f) + "  图片：" + MyGlideImageLoader.getCacheSize(getContext()));
         StorageData.setHeadImage(imageView, StorageData.getString(), getContext());  //头像
         if (!SharedPreferencesMgr.getString("password", "").equals("") &&
@@ -114,9 +123,9 @@ public class MyFragment extends BaseFragment {
         imageView.setOnClickListener(v -> Dialog());
         mButton.setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), LoginActivity.class)));
-         if( !SharedPreferencesMgr.getString("name", "").equals("")){
-             myTv.setText(SharedPreferencesMgr.getString("name", ""));
-         }
+        if (!SharedPreferencesMgr.getString("name", "").equals("")) {
+            myTv.setText(SharedPreferencesMgr.getString("name", ""));
+        }
         edxtTv.setOnClickListener(v -> {
             if (!SharedPreferencesMgr.getString("password", "").equals("") &&
                     !SharedPreferencesMgr.getString("name", "").equals("")) {
@@ -129,6 +138,7 @@ public class MyFragment extends BaseFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 SharedPreferencesMgr.remove(getContext(), "name");
                                 SharedPreferencesMgr.remove(getContext(), "password");
+                                EMClient.getInstance().logout(true);
                                 toast("您已退出登陆");
                                 mButton.setText("登陆");
                                 mButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.loginButton));
@@ -171,16 +181,16 @@ public class MyFragment extends BaseFragment {
                 b = false;
             } else {
                 layout.setVisibility(View.GONE);
-                b=true;
+                b = true;
             }
         });
 
         webTv.setOnClickListener(v -> {
-            Intent intent=new Intent(getActivity(), WebViewDetailsActivity.class);
+            Intent intent = new Intent(getActivity(), WebViewDetailsActivity.class);
             intent.putExtra("wechaturl", "https://github.com/mhyc666/meng");
             startActivity(intent);
-    });
-}
+        });
+    }
 
     private void Dialog() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.photo_choose_dialog, null);

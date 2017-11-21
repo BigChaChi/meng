@@ -13,7 +13,6 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -34,15 +33,11 @@ import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.RationaleListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -70,7 +65,7 @@ public class WeatherActivity extends BaseActivity implements WeatherActivityCont
     private static final int REQUEST_CODE_PERMISSION = 100;
     private static final int REQUEST_CODE_SETTING = 300;
 
-    public class MyLocationListener extends BDAbstractLocationListener implements BDLocationListener {
+    public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
             //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果

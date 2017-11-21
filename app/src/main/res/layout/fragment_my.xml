@@ -77,6 +77,7 @@
 
 
         <RelativeLayout
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
          <TextView
@@ -104,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <RelativeLayout
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
@@ -129,16 +131,31 @@
             android:background="@color/background_gray1"
             android:layout_below="@+id/iv"
             android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/friend_tv"
+            android:text="我的好友"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
+        <View
+            android:background="@color/background_gray1"
+            android:layout_below="@+id/iv"
+            android:layout_width="match_parent"
             android:layout_height="15dp"/>
 
 
 
         <TextView
             android:id="@+id/gyu"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:text="关于"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <LinearLayout
@@ -151,9 +168,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
                 android:text="github"
                 android:layout_width="wrap_content"
@@ -162,10 +179,10 @@
                 android:textIsSelectable="true"
                 android:textColor="@color/blue_color"
                 android:text="https://github.com/mhyc666/meng"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:id="@+id/web_tv"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
@@ -180,21 +197,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:text="邮箱"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:textIsSelectable="true"
                 android:text="786717306@qq.com"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -208,9 +225,9 @@
 
         <TextView
             android:id="@+id/exit"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:text="退出登陆"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -229,7 +246,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:background="@drawable/button_all_round"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="100dp"
             android:layout_width="match_parent"
             android:layout_height="36dp" />
     </LinearLayout>

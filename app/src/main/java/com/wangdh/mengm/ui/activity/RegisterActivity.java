@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wangdh.mengm.MyApplication;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
+import com.wangdh.mengm.base.im.DemoHelper;
 import com.wangdh.mengm.component.AppComponent;
 import com.wangdh.mengm.ui.Presenter.RegisterPresenter;
 import com.wangdh.mengm.ui.contract.RegisterContract;
@@ -214,6 +215,8 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     public void complete() {
         hideDialog();
         toast("注册成功");
+        // 保存当前用户
+        DemoHelper.getInstance().setCurrentUserName(name);
         SharedPreferencesMgr.setString("name", name);
         SharedPreferencesMgr.setString("password", password);
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

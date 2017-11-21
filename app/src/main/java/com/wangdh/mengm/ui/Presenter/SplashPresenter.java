@@ -30,7 +30,12 @@ public class SplashPresenter extends RxPresenter<SplashContract.View> implements
                     @Override
                     public void onNext(CelebratedDictum dictum) {
                         if (dictum.getError_code() == 0) {
-                            mView.showSplashData(dictum);
+                            try {
+                                mView.showSplashData(dictum);
+                            }catch (NullPointerException e){
+                                e.getMessage();
+                            }
+
                         } else {
                         }
                     }

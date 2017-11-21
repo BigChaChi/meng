@@ -1,15 +1,21 @@
 package com.wangdh.mengm.ui.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
+import com.wangdh.mengm.base.im.DemoHelper;
 import com.wangdh.mengm.bean.bmob.AccountBean;
 import com.wangdh.mengm.component.AppComponent;
+import com.wangdh.mengm.db.DemoDBManager;
 import com.wangdh.mengm.manager.EventManager;
 import com.wangdh.mengm.manager.LoginEvent;
 import com.wangdh.mengm.utils.KeyboardUtils;
@@ -19,6 +25,7 @@ import com.wangdh.mengm.widget.FilterImageView;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
@@ -96,17 +103,48 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void done(List<AccountBean> list, BmobException e) {
                         if (e == null) {
-                                if (list.get(0).getName().equals(phone) && list.get(0).getPassword().equals(password)) {
-                                    SharedPreferencesMgr.setString("password", password);
-                                    SharedPreferencesMgr.setString("name", phone);
-                                    EventBus.getDefault().post(new LoginEvent());
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    LoginActivity.this.finish();
-                                }
+                            if (list.get(0).getName().equals(phone) && list.get(0).getPassword().equals(password)) {
+                                SharedPreferencesMgr.setString("password", password);
+                                SharedPreferencesMgr.setString("name", phone);
+                            }
+                            // After logout，the DemoDB may still be accessed due to async callback, so the DemoDB will be re-opened again.
+                            // close it before login to make sure DemoDB not overlap
+                            DemoDBManager.getInstance().closeDB();
+                            // 在登录前重置当前用户名
+                            DemoHelper.getInstance().setCurrentUserName(password);
+
+                                    EMClient.getInstance().login(phone, password, new EMCallBack() {//回调
+                                        @Override
+                                        public void onSuccess() {
+                                            EMClient.getInstance().groupManager().loadAllGroups();
+                                            EMClient.getInstance().chatManager().loadAllConversations();
+                                            Log.d("toast", "登录聊天服务器成功！");
+                                            EventBus.getDefault().post(new LoginEvent());
+                                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                            LoginActivity.this.finish();
+                                        }
+
+                                        @Override
+                                        public void onProgress(int progress, String status) {
+
+                                        }
+
+                                        @Override
+                                        public void onError(int code, String message) {
+
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    toast("登录聊天服务器失败!"+message);
+                                                }
+                                            });
+                                        }
+                                    });
+
                         } else {
                             toast("登陆失败");
+                            hideDialog();
                         }
-                        hideDialog();
                     }
                 });
             } else {

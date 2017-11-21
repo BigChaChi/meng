@@ -25,14 +25,15 @@
             android.support.design:itemTextColor="@color/nev_item" />
     </group>
 
-    <!--<item-->
-        <!--android:id="@+id/meiziitem"-->
-        <!--android:checkable="true"-->
-        <!--android:icon="@drawable/look2"-->
-        <!--android:title="@string/meizi"-->
-        <!--android.support.design:itemTextColor="@color/nev_item"-->
-        <!--app:itemIconTint="@color/nev_item"/>-->
+    <item android:title="聊天">
 
+    <item
+        android:id="@+id/friend"
+        android:checkable="true"
+        android:icon="@mipmap/friend"
+        android:title="@string/friend"
+        android.support.design:itemTextColor="@color/nev_item" />
+    </item>
 
     <!--<item android:title="设置">-->
         <!--<menu>-->
