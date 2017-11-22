@@ -11,13 +11,11 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.bean.Channel;
 import com.wangdh.mengm.listener.OnChannelDragListener;
-
 import java.util.List;
 
 
@@ -139,7 +137,6 @@ public class ChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseViewH
                                     //我的频道最后一行 之后一个，移动后
                                     targetY -= targetView.getHeight();
                                 }
-
                                 //我的频道 移动到 推荐频道的第一个
                                 channel.setItemType(Channel.TYPE_OTHER_CHANNEL);//改为推荐频道类型
 
@@ -155,8 +152,6 @@ public class ChannelAdapter extends BaseMultiItemQuickAdapter<Channel, BaseViewH
 //                            GlobalParams.mRemovedChannels.add(channel);
                         }
                     }
-
-
                 });
                 break;
             case Channel.TYPE_OTHER_CHANNEL:

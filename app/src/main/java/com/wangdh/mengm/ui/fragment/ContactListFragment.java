@@ -55,7 +55,8 @@ public class ContactListFragment extends EaseContactListFragment{
         //add loading view
         loadingView = LayoutInflater.from(getActivity()).inflate(R.layout.em_layout_loading_data, null);
         contentContainer.addView(loadingView);
-
+        titleBar.setLeftImageResource(R.mipmap.ab_back);
+        titleBar.setLeftLayoutClickListener(v -> getActivity().finish());
         registerForContextMenu(listView);
     }
 

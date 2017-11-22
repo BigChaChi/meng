@@ -10,7 +10,6 @@ import com.just.library.ChromeClientCallbackManager;
 import com.wangdh.mengm.R;
 import com.wangdh.mengm.base.BaseActivity;
 import com.wangdh.mengm.component.AppComponent;
-import com.wangdh.mengm.utils.StateBarTranslucentUtils;
 import com.wangdh.mengm.utils.ToolbarUtils;
 
 import butterknife.BindView;

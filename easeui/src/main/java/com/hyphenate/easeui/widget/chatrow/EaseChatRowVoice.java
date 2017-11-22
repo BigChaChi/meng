@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
@@ -101,9 +100,9 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     public void startVoicePlayAnimation() {
         if (message.direct() == EMMessage.Direct.RECEIVE) {
-            voiceImageView.setImageResource(R.anim.voice_from_icon);
+            voiceImageView.setImageResource(R.drawable.voice_from_icon);
         } else {
-            voiceImageView.setImageResource(R.anim.voice_to_icon);
+            voiceImageView.setImageResource(R.drawable.voice_to_icon);
         }
         voiceAnimation = (AnimationDrawable) voiceImageView.getDrawable();
         voiceAnimation.start();

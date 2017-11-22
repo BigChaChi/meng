@@ -56,10 +56,8 @@ import com.yanzhenjie.alertdialog.AlertDialog;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.RationaleListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -154,7 +152,6 @@ public class MainActivity extends BaseActivity {
                             toast("当前网络不可用，请检查网络设置");
                             //当前网络不可用，请检查网络设置
                         }
-
                     }
                 }
             });
