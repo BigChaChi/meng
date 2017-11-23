@@ -218,9 +218,11 @@
 -keep class org.apache.http.**{*;}
 
 
+-keep class android.support.multidex.**{*;}
 
 #im
 -dontwarn com.hyphenate.**
+-keep class org.xmlpull.** {*;}
 -keep class com.hyphenate.** {*;}
 -keep class com.hyphenate.chat.** {*;}
 -keep class org.jivesoftware.** {*;}

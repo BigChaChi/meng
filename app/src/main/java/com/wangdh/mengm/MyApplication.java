@@ -1,5 +1,8 @@
 package com.wangdh.mengm;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.mob.MobApplication;
@@ -22,6 +25,7 @@ public class MyApplication extends MobApplication {
 
     @Override
     public void onCreate() {
+        MultiDex.install(this);
         super.onCreate();
         initCompoent();
         sInstance = this;
@@ -41,7 +45,7 @@ public class MyApplication extends MobApplication {
 //初始化
         EMClient.getInstance().init(sInstance, options);
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(true);
+        EMClient.getInstance().setDebugMode(false);
     }
 
     private void initCompoent() {
@@ -57,6 +61,12 @@ public class MyApplication extends MobApplication {
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static boolean isPhoneNum(String phone) {  //手机号
