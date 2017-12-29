@@ -4,7 +4,7 @@ meng
 ----
 https://github.com/mhyc666/meng/raw/master/APK/mengm.apk
 
-打不开崩溃是权限问题，暂时没空去修复。
+
 练习的APP。由于懒的写，控价名称什么的随便取的，部分代码比较乱随便看看。 
 目前的bug,以后在修复。
 -------
